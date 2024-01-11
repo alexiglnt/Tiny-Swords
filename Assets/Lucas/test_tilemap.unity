@@ -258,6 +258,7 @@ GameObject:
   - component: {fileID: 181873030}
   - component: {fileID: 181873029}
   - component: {fileID: 181873028}
+  - component: {fileID: 181873031}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -339,6 +340,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &181873031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 181873027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2922849ff7316ba4aa8934d5aaccc52a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 5
+  edgeBoundary: 10
+  zoomSpeed: 2
+  minZoom: 5
+  maxZoom: 20
 --- !u!4 &238526956 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7771282057372582216, guid: 08b4344f4ea9d1843b40b55693c81ac5, type: 3}
@@ -3835,7 +3853,7 @@ Tilemap:
       - {fileID: -1454315520, guid: 41786de7a9448a344bb1e01bddb58919, type: 3}
       - {fileID: 1352373960, guid: 41786de7a9448a344bb1e01bddb58919, type: 3}
       - {fileID: 959419791, guid: 41786de7a9448a344bb1e01bddb58919, type: 3}
-      m_AnimationSpeed: 10
+      m_AnimationSpeed: 10.000001
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -13, y: -2, z: 0}
@@ -10693,6 +10711,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8979757825876100912, guid: ec7159cb98b413146b92bf72b984be79, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 0986428532b47b54da653a7948f5a0eb, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -11295,6 +11317,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: archer_red
       objectReference: {fileID: 0}
+    - target: {fileID: 6866583280994285985, guid: 03b82f70f9bb99843a87dd305962c1a0, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: f1760d50573b28e49b322789425190e7, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
