@@ -15,6 +15,8 @@ public class PauseMenu : MonoBehaviour
     public GameObject retractableBanner;
     bool isBannerOpened = false;
 
+    public GameObject SoundOffBtn;
+    public GameObject InvisibleButton;
 
 
     // Update is called once per frame
@@ -79,23 +81,28 @@ public class PauseMenu : MonoBehaviour
     public void SwitchBanner()
     {
         Debug.Log("SwitchBanner()");
+        
+        Vector3 currentPosition = retractableBanner.transform.position;
+        Vector3 currentPositionInvisibleBtn = InvisibleButton.transform.position;
+        float translationAmount = 130f; // Ajustez la valeur selon vos besoins
+        float translationAmountNegative = -130f; // Ajustez la valeur selon vos besoins
+
 
         if (isBannerOpened)
         {
-            Vector3 currentPosition = retractableBanner.transform.position;
-            float translationAmount = 130f; // Ajustez la valeur selon vos besoins
-            retractableBanner.transform.position = new Vector3(currentPosition.x + translationAmount, currentPosition.y, currentPosition.z);
-            
             isBannerOpened = false;
+            
+            retractableBanner.transform.position = new Vector3(currentPosition.x + translationAmount, currentPosition.y, currentPosition.z);
+            InvisibleButton.transform.position = new Vector3(currentPositionInvisibleBtn.x + translationAmount, currentPositionInvisibleBtn.y, currentPositionInvisibleBtn.z);
+
         }
         else
         {
             isBannerOpened = true;
-
-            // Faites la translation vers la gauche de quelques pixels
-            Vector3 currentPosition = retractableBanner.transform.position;
-            float translationAmount = -130f; // Ajustez la valeur selon vos besoins
-            retractableBanner.transform.position = new Vector3(currentPosition.x + translationAmount, currentPosition.y, currentPosition.z);
+            SoundOffBtn.transform.SetAsLastSibling();
+            
+            retractableBanner.transform.position = new Vector3(currentPosition.x + translationAmountNegative, currentPosition.y, currentPosition.z);    
+            InvisibleButton.transform.position = new Vector3(currentPositionInvisibleBtn.x + translationAmountNegative, currentPositionInvisibleBtn.y, currentPositionInvisibleBtn.z);
         }
     }
 
