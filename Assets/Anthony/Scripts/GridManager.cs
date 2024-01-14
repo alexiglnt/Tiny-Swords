@@ -32,7 +32,7 @@ public class GridManager : MonoBehaviour
 
     void UpdateTileMap()
     {
-        for(int x = 0; x < _grid.Length; x++)
+        for(int x = 0; x < _grid.Width; x++)
         {
             for (int y = 0; y < _grid.Height; y++)
             {
