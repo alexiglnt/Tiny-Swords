@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a457c0a2166c3da42b3c1780de424b0d, type: 3}
+  m_Name: TonyTriangle
+  m_EditorClassIdentifier: 
+  name: Tony Triangle
+  description: Version alternantive de Basic Tony
+  artwork: {fileID: -241648429852771626, guid: cc6bf40f3c5ac1d43bbd47aa252f9fe6, type: 3}
+  attackPoint: 9
+  healthPoint: 6
+  movevementPoint: 2
