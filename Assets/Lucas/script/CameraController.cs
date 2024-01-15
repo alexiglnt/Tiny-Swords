@@ -23,6 +23,12 @@ public class CameraController : MonoBehaviour
     private void Awake()
     {
         controls = new Controls();
+    }
+
+    private void OnEnable()
+    {
+        // Subscribe to events
+        controls.Gameplay.Enable();
 
         // Zoom
         controls.Gameplay.ZoomIn.performed += ctx => SetZoomInput(ctx.ReadValue<float>(), true);
@@ -45,19 +51,58 @@ public class CameraController : MonoBehaviour
         controls.Gameplay.Drag.canceled += ctx => OnDragEnded(ctx);
     }
 
-    private void OnEnable()
-    {
-        controls.Gameplay.Enable();
-    }
-
     private void OnDisable()
     {
+        // Unsubscribe from events
         controls.Gameplay.Disable();
+
+        // Zoom
+        controls.Gameplay.ZoomIn.performed -= ctx => SetZoomInput(ctx.ReadValue<float>(), true);
+        controls.Gameplay.ZoomIn.canceled -= ctx => SetZoomInput(0, true);
+        controls.Gameplay.ZoomOut.performed -= ctx => SetZoomInput(ctx.ReadValue<float>(), false);
+        controls.Gameplay.ZoomOut.canceled -= ctx => SetZoomInput(0, false);
+        controls.Gameplay.Scroll.performed -= ctx => SetScrollZoomInput(ctx.ReadValue<Vector2>().y);
+        controls.Gameplay.Scroll.canceled -= ctx => SetScrollZoomInput(0);
+
+        // Movement
+        controls.Gameplay.Up.performed -= ctx => SetMoveInput(Vector2.up);
+        controls.Gameplay.Up.canceled -= ctx => ResetMoveInput();
+        controls.Gameplay.Down.performed -= ctx => SetMoveInput(Vector2.down);
+        controls.Gameplay.Down.canceled -= ctx => ResetMoveInput();
+        controls.Gameplay.Left.performed -= ctx => SetMoveInput(Vector2.left);
+        controls.Gameplay.Left.canceled -= ctx => ResetMoveInput();
+        controls.Gameplay.Right.performed -= ctx => SetMoveInput(Vector2.right);
+        controls.Gameplay.Right.canceled -= ctx => ResetMoveInput();
+        controls.Gameplay.Drag.performed -= ctx => OnDragStarted(ctx);
+        controls.Gameplay.Drag.canceled -= ctx => OnDragEnded(ctx);
+
     }
 
     void Update()
     {
         Vector3 pos = transform.position;
+
+        // Determine diagonal movement based on current input
+        moveInput = Vector2.zero;
+        if (controls.Gameplay.Up.IsPressed())
+        {
+            moveInput.y += 1;
+        }
+        if (controls.Gameplay.Down.IsPressed())
+        {
+            moveInput.y -= 1;
+        }
+        if (controls.Gameplay.Left.IsPressed())
+        {
+            moveInput.x -= 1;
+        }
+        if (controls.Gameplay.Right.IsPressed())
+        {
+            moveInput.x += 1;
+        }
+
+        // Normalize the moveInput to prevent faster diagonal movement
+        moveInput.Normalize();
 
         // Handle camera movement input
         pos.x += moveInput.x * panSpeed * Time.deltaTime;
