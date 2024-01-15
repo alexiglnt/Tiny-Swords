@@ -707,11 +707,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2922849ff7316ba4aa8934d5aaccc52a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
-  edgeBoundary: 10
-  zoomSpeed: 2
-  minZoom: 5
+  panSpeed: 20
+  panLimit: {x: 1500, y: 1500}
+  zoomSpeed: 0.01
+  scrollZoomSensitivity: 0.1
+  minZoom: 1
   maxZoom: 20
+  dragSensitivity: 1
 --- !u!4 &238526956 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7771282057372582216, guid: 08b4344f4ea9d1843b40b55693c81ac5, type: 3}
@@ -871,7 +873,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &319149900
 Transform:
   m_ObjectHideFlags: 0
@@ -5704,7 +5706,7 @@ Tilemap:
       - {fileID: 1617045905, guid: 969d8e0103544aa4db8b51e1f170b504, type: 3}
       - {fileID: 1592047405, guid: 969d8e0103544aa4db8b51e1f170b504, type: 3}
       - {fileID: -952298850, guid: 969d8e0103544aa4db8b51e1f170b504, type: 3}
-      m_AnimationSpeed: 10.000001
+      m_AnimationSpeed: 10
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -2, y: -2, z: 0}
