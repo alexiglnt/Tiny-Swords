@@ -12,7 +12,7 @@ public class GridControl : MonoBehaviour
     private GridManager _gridManager;
 
     [SerializeField] 
-    private TileBase highlightTile;
+    private TileBase _highlightTile;
 
     Pathfinding _pathfinding;
 
@@ -49,7 +49,7 @@ public class GridControl : MonoBehaviour
             {
                 for (int i = 0; i < path.Count; i++)
                 {
-                    _targetTilemap.SetTile(new Vector3Int(path[i].xPos, path[i].yPos, 0), highlightTile);
+                    _targetTilemap.SetTile(new Vector3Int(path[i].xPos, path[i].yPos, 0), _highlightTile);
                 }
 
                 _currentX = _targetPosX;
