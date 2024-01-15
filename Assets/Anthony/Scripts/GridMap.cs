@@ -12,20 +12,20 @@ public class GridMap : MonoBehaviour
         private set { _height = value; }
     }
 
-    private int _length;
-    public int Length
+    private int _width;
+    public int Width
     {
-        get { return _length; }
-        private set { _length = value; }
+        get { return _width; }
+        private set { _width = value; }
     }
 
     private int[,] _grid;
 
-    public void Init(int lenght, int height)
+    public void Init(int width, int height)
     {
-        _grid = new int[lenght, height];
+        _grid = new int[width, height];
         _height = height;
-        _length = lenght;
+        _width = width;
     }
 
     public void Set(int x, int y, int to)
@@ -56,7 +56,7 @@ public class GridMap : MonoBehaviour
 
     public bool CheckPosition(int x, int y)
     {
-        if(x < 0 || x >= _length)
+        if(x < 0 || x >= _width)
             return false;
 
         if(y < 0 || y >= _height) 

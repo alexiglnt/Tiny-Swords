@@ -47,9 +47,9 @@ public class Pathfinding : MonoBehaviour
             _gridMap = GetComponent<GridMap>();
         }
 
-        _pathNodes = new PathNode[_gridMap.Length, _gridMap.Height];
+        _pathNodes = new PathNode[_gridMap.Width, _gridMap.Height];
 
-        for (int x = 0; x < _gridMap.Length; x++)
+        for (int x = 0; x < _gridMap.Width; x++)
         {
             for (int y = 0; y < _gridMap.Height; y++)
             {
