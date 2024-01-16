@@ -75,7 +75,7 @@ ScriptedImporter:
     importHiddenLayers: 0
     layerImportMode: 1
     defaultPivotSpace: 0
-    defaultPivotAlignment: 7
+    defaultPivotAlignment: 0
     customPivotPosition: {x: 0.5, y: 0.5}
     spritePadding: 0
     generateModelPrefab: 1
@@ -87,7 +87,7 @@ ScriptedImporter:
     importHiddenLayers: 0
     layerImportMode: 1
     defaultPivotSpace: 0
-    defaultPivotAlignment: 7
+    defaultPivotAlignment: 0
     customPivotPosition: {x: 0.5, y: 0.5}
     spritePadding: 0
     generateModelPrefab: 1
@@ -95,7 +95,7 @@ ScriptedImporter:
     addSortingGroup: 1
     addShadowCasters: 0
   importFileNodeState: 1
-  platformSettingsDirtyTick: 0
+  platformSettingsDirtyTick: 638410404290669629
   textureAssetName: 
   singleSpriteImportData:
   - name: 
@@ -121,7 +121,7 @@ ScriptedImporter:
   animatedSpriteImportData:
   - name: Dead_Frame_1
     originalName: 
-    pivot: {x: 0.48214287, y: -0.453125}
+    pivot: {x: 0.48214287, y: 0.546875}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -141,7 +141,7 @@ ScriptedImporter:
     uvTransform: {x: 4, y: 79}
   - name: Dead_Frame_2
     originalName: 
-    pivot: {x: 0.48333335, y: -0.43283582}
+    pivot: {x: 0.48333335, y: 0.52238804}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -161,7 +161,7 @@ ScriptedImporter:
     uvTransform: {x: 4, y: 4}
   - name: Dead_Frame_3
     originalName: 
-    pivot: {x: 0.4871795, y: -0.5178572}
+    pivot: {x: 0.4871795, y: 0.625}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -181,7 +181,7 @@ ScriptedImporter:
     uvTransform: {x: 4, y: 151}
   - name: Dead_Frame_4
     originalName: 
-    pivot: {x: 0.47272727, y: -0.8787879}
+    pivot: {x: 0.47272727, y: 1.0606061}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -201,7 +201,7 @@ ScriptedImporter:
     uvTransform: {x: 4, y: 215}
   - name: Dead_Frame_5
     originalName: 
-    pivot: {x: 0.42105263, y: -0.6744186}
+    pivot: {x: 0.42105263, y: 0.81395346}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -221,7 +221,7 @@ ScriptedImporter:
     uvTransform: {x: 72, y: 209}
   - name: Dead_Frame_6
     originalName: 
-    pivot: {x: 0.4390244, y: -0.725}
+    pivot: {x: 0.4390244, y: 0.875}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -241,7 +241,7 @@ ScriptedImporter:
     uvTransform: {x: 72, y: 113}
   - name: Dead_Frame_7
     originalName: 
-    pivot: {x: 0.4468085, y: -0.85294116}
+    pivot: {x: 0.4468085, y: 1.0294118}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -261,7 +261,7 @@ ScriptedImporter:
     uvTransform: {x: 124, y: 4}
   - name: Dead_Frame_8
     originalName: 
-    pivot: {x: 0.41025642, y: -0.59183675}
+    pivot: {x: 0.41025642, y: 0.7142857}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -281,7 +281,7 @@ ScriptedImporter:
     uvTransform: {x: 72, y: 56}
   - name: Dead_Frame_9
     originalName: 
-    pivot: {x: 0.4390244, y: -0.725}
+    pivot: {x: 0.4390244, y: 0.875}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -301,7 +301,7 @@ ScriptedImporter:
     uvTransform: {x: 72, y: 161}
   - name: Dead_Frame_10
     originalName: 
-    pivot: {x: 0.48780486, y: -0.9117647}
+    pivot: {x: 0.48780486, y: 0.97058827}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -321,7 +321,7 @@ ScriptedImporter:
     uvTransform: {x: 124, y: 46}
   - name: Dead_Frame_11
     originalName: 
-    pivot: {x: 0.48780486, y: -1.1481482}
+    pivot: {x: 0.48780486, y: 1.2222222}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -341,7 +341,7 @@ ScriptedImporter:
     uvTransform: {x: 124, y: 88}
   - name: Dead_Frame_12
     originalName: 
-    pivot: {x: 0.46875, y: -1.8235294}
+    pivot: {x: 0.46875, y: 1.9411765}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -361,7 +361,7 @@ ScriptedImporter:
     uvTransform: {x: 124, y: 123}
   - name: Dead_Frame_13
     originalName: 
-    pivot: {x: 0.48, y: -3.6666667}
+    pivot: {x: 0.48, y: 3.4444444}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -381,7 +381,7 @@ ScriptedImporter:
     uvTransform: {x: 124, y: 148}
   - name: Dead_Frame_0
     originalName: 
-    pivot: {x: 0.47727275, y: -0.97727275}
+    pivot: {x: 0.47727275, y: 0.47727275}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -522,7 +522,43 @@ ScriptedImporter:
       spriteId: 27e867a9b269c894f827d135fc1c5790
     linkedCells: []
     parentIndex: -1
-  platformSettings: []
+  platformSettings:
+  - name: DefaultTexturePlatform
+    overridden: 0
+    ignorePlatformSupport: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
+  - name: Standalone
+    overridden: 0
+    ignorePlatformSupport: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
+  - name: Server
+    overridden: 0
+    ignorePlatformSupport: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
   secondarySpriteTextures: []
   spritePackingTag: 
   canvasSize: {x: 128, y: 128}
