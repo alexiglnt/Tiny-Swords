@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 8307066127145680139}
   - component: {fileID: 3730704066169354419}
   - component: {fileID: 3772571724681831579}
+  - component: {fileID: 4348805915312217111}
   m_Layer: 0
   m_Name: goblin_torch_red
-  m_TagString: Untagged
+  m_TagString: goblin_torch_red
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -106,3 +107,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &4348805915312217111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 125563642907176761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60cca73dedce3044f881e5e355518d26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  card: {fileID: 11400000, guid: 17fe0e636284d24429988893a4a98885, type: 2}
+  cardDisplay: {fileID: 621701224107558435, guid: 6f04e73a38442b44e9ca99f308fb572b, type: 3}
+  CardCanvas: {fileID: 4834370636999566786, guid: 6f04e73a38442b44e9ca99f308fb572b, type: 3}

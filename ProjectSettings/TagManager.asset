@@ -3,7 +3,19 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - goblin_torch_red
+  - goblin_tnt_red
+  - goblin_barrel_red
+  - goblin_torch_yellow
+  - goblin_tnt_yellow
+  - goblin_barrel_yellow
+  - goblin_torch_blue
+  - goblin_torch_purple
+  - goblin_tnt_blue
+  - goblin_tnt_purple
+  - goblin_barrel_blue
+  - goblin_barrel_pruple
   layers:
   - Default
   - TransparentFX

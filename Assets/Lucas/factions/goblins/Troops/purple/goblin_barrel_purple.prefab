@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1165086182549748285}
   m_Layer: 0
   m_Name: goblin_barrel_purple
-  m_TagString: Untagged
+  m_TagString: goblin_barrel_pruple
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
