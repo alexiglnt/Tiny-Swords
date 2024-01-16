@@ -75,6 +75,11 @@ public class GridManager : MonoBehaviour
 
     }
 
+    internal bool CheckPosition(int x, int y)
+    {
+        return _grid.CheckPosition(x, y);
+    }
+
     private void UpdateTile(int x, int y)
     {
         int tileId = _grid.GetTile(x, y);
@@ -121,5 +126,4 @@ public class GridManager : MonoBehaviour
         return tilemapData;
     }
 
-    
 }
