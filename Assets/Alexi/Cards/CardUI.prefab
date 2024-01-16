@@ -1237,7 +1237,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7873501691749581780
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1334,7 +1334,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4eba62852721c00438b4d60a9a8f4259, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  card: {fileID: 11400000, guid: c91f8d57ec3d8ff43b5539dbab0ee74f, type: 2}
+  card: {fileID: 11400000, guid: 5aba3e3b08fbe5d4f967e11c56d72f8e, type: 2}
   nameText: {fileID: 4311377128386146211}
   descriptionText: {fileID: 1403835092288315777}
   artworkImage: {fileID: 3738105338213434722}
