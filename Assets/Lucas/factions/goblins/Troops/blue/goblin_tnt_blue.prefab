@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8768751242688063815}
   m_Layer: 0
   m_Name: goblin_tnt_blue
-  m_TagString: Untagged
+  m_TagString: goblin_tnt_blue
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
