@@ -33,11 +33,16 @@ public class GridControl : MonoBehaviour
 
     private void MousInput()
     {
+        Vector3 worldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector3Int clickPosition = _targetTilemap.WorldToCell(worldPoint);
+
+        
+
         if (Input.GetMouseButtonDown(0))
         {
+            Debug.Log("test");
+
             _targetTilemap.ClearAllTiles();
-            Vector3 worldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector3Int clickPosition = _targetTilemap.WorldToCell(worldPoint);
             //_gridManager.Set(clickPosition.x, clickPosition.y, 1);
 
             _targetPosX = clickPosition.x;
@@ -56,5 +61,15 @@ public class GridControl : MonoBehaviour
                 _currentY = _targetPosY;
             }
         }
+
+        if (Input.GetMouseButtonDown(1)) 
+        {
+            Character character = _gridManager.GetCharacter(clickPosition.x, clickPosition.y);
+            if (character != null)
+            {
+                Debug.Log("Character in the cell " + character.Name);
+            }
+        }
+
     }
 }

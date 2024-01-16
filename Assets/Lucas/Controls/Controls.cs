@@ -98,6 +98,24 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SelectCell1"",
+                    ""type"": ""Button"",
+                    ""id"": ""ebedd476-fb1e-47fb-8110-242518647139"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SelectCell2"",
+                    ""type"": ""Button"",
+                    ""id"": ""f352bee8-0f6b-4ccc-a9cb-58d890e10839"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -331,6 +349,28 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""Drag"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""989bf9be-ab07-4596-9537-14bf3d667121"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SelectCell1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c1c16c3c-fbc9-42cc-9b9b-c624d3f920bf"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SelectCell2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -347,6 +387,8 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Gameplay_Right = m_Gameplay.FindAction("Right", throwIfNotFound: true);
         m_Gameplay_Scroll = m_Gameplay.FindAction("Scroll", throwIfNotFound: true);
         m_Gameplay_Drag = m_Gameplay.FindAction("Drag", throwIfNotFound: true);
+        m_Gameplay_SelectCell1 = m_Gameplay.FindAction("SelectCell1", throwIfNotFound: true);
+        m_Gameplay_SelectCell2 = m_Gameplay.FindAction("SelectCell2", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -416,6 +458,8 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Right;
     private readonly InputAction m_Gameplay_Scroll;
     private readonly InputAction m_Gameplay_Drag;
+    private readonly InputAction m_Gameplay_SelectCell1;
+    private readonly InputAction m_Gameplay_SelectCell2;
     public struct GameplayActions
     {
         private @Controls m_Wrapper;
@@ -428,6 +472,8 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @Right => m_Wrapper.m_Gameplay_Right;
         public InputAction @Scroll => m_Wrapper.m_Gameplay_Scroll;
         public InputAction @Drag => m_Wrapper.m_Gameplay_Drag;
+        public InputAction @SelectCell1 => m_Wrapper.m_Gameplay_SelectCell1;
+        public InputAction @SelectCell2 => m_Wrapper.m_Gameplay_SelectCell2;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -461,6 +507,12 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Drag.started += instance.OnDrag;
             @Drag.performed += instance.OnDrag;
             @Drag.canceled += instance.OnDrag;
+            @SelectCell1.started += instance.OnSelectCell1;
+            @SelectCell1.performed += instance.OnSelectCell1;
+            @SelectCell1.canceled += instance.OnSelectCell1;
+            @SelectCell2.started += instance.OnSelectCell2;
+            @SelectCell2.performed += instance.OnSelectCell2;
+            @SelectCell2.canceled += instance.OnSelectCell2;
         }
 
         private void UnregisterCallbacks(IGameplayActions instance)
@@ -489,6 +541,12 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Drag.started -= instance.OnDrag;
             @Drag.performed -= instance.OnDrag;
             @Drag.canceled -= instance.OnDrag;
+            @SelectCell1.started -= instance.OnSelectCell1;
+            @SelectCell1.performed -= instance.OnSelectCell1;
+            @SelectCell1.canceled -= instance.OnSelectCell1;
+            @SelectCell2.started -= instance.OnSelectCell2;
+            @SelectCell2.performed -= instance.OnSelectCell2;
+            @SelectCell2.canceled -= instance.OnSelectCell2;
         }
 
         public void RemoveCallbacks(IGameplayActions instance)
@@ -516,5 +574,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnRight(InputAction.CallbackContext context);
         void OnScroll(InputAction.CallbackContext context);
         void OnDrag(InputAction.CallbackContext context);
+        void OnSelectCell1(InputAction.CallbackContext context);
+        void OnSelectCell2(InputAction.CallbackContext context);
     }
 }

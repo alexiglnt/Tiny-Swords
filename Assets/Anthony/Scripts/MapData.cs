@@ -18,7 +18,7 @@ public class MapData : ScriptableObject
         { 
             for(int y = 0; y < height; y++)
             {
-                gridMap.Set(x, y, Get(x, y));
+                gridMap.SetTile(x, y, Get(x, y));
             }
         }
     }
@@ -46,7 +46,7 @@ public class MapData : ScriptableObject
         {
             for (int y = 0; y < height; y++)
             {
-                map.Add(gridMap.Get(x, y));
+                map.Add(gridMap.GetTile(x, y));
             }
         }
     }

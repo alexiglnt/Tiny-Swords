@@ -77,7 +77,7 @@ public class GridManager : MonoBehaviour
 
     private void UpdateTile(int x, int y)
     {
-        int tileId = _grid.Get(x, y);
+        int tileId = _grid.GetTile(x, y);
 
         if (tileId == -1)
             return;
@@ -85,9 +85,14 @@ public class GridManager : MonoBehaviour
         _tilemap.SetTile(new Vector3Int(x, y, 0), _tileSet.tiles[tileId]);
     }
 
+    internal Character GetCharacter(int x, int y)
+    {
+        return _grid.GetCharacter(x, y);
+    }
+
     public void Set(int x, int y, int to)
     {
-        _grid.Set(x, y, to);
+        _grid.SetTile(x, y, to);
         UpdateTile(x, y);
     }
 
@@ -116,4 +121,5 @@ public class GridManager : MonoBehaviour
         return tilemapData;
     }
 
+    
 }
