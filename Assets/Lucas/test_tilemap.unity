@@ -5435,7 +5435,7 @@ Tilemap:
       - {fileID: 1617045905, guid: 969d8e0103544aa4db8b51e1f170b504, type: 3}
       - {fileID: 1592047405, guid: 969d8e0103544aa4db8b51e1f170b504, type: 3}
       - {fileID: -952298850, guid: 969d8e0103544aa4db8b51e1f170b504, type: 3}
-      m_AnimationSpeed: 10.000001
+      m_AnimationSpeed: 10
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -4, y: -7, z: 0}
@@ -6505,6 +6505,7 @@ MonoBehaviour:
   - {fileID: 8753390176376090271, guid: 378a8a7334c90d84a9a7d46b936602e2, type: 3}
   - {fileID: 7129214534261447112, guid: 8566dd927cb4966449273ab9cbf1bd92, type: 3}
   - {fileID: 4284874980893243099, guid: cf8b9fa79f51286409c6061016c5cb57, type: 3}
+  decorationsParent: {fileID: 0}
   bonePrefab: {fileID: 5620828030289360568, guid: 0724c2e531b005542a9c2b83bd367713, type: 3}
   bushNoiseScale: 0.1
   bushThreshold: 0.7
@@ -6524,9 +6525,9 @@ MonoBehaviour:
   pumpkinOffsetY: 0
   stoneOffsetX: 0
   stoneOffsetY: 0
-  mapWidth: 100
-  mapHeight: 100
-  noiseScale: 0.05
+  mapWidth: 50
+  mapHeight: 50
+  noiseScale: 0.1
   offsetX: 0
   offsetY: 0
   baseRockSpawnChance: 0.5
@@ -9650,7 +9651,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2038188595
 Transform:
   m_ObjectHideFlags: 0
@@ -9742,7 +9743,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2142464110
 Transform:
   m_ObjectHideFlags: 0

@@ -200,23 +200,30 @@ public class MapGenerator : MonoBehaviour
         {
             for (int y = 0; y < mapHeight; y++)
             {
-                if (IsSingleStoneTile(x, y))
+                // Check if the current tile is a stone tile
+                if (stoneTilemap.GetTile(new Vector3Int(x, y, 0)) == stoneRuleTile)
                 {
-                    // Add a stone tile below if there's no stone tile
-                    grassTilemap.SetTile(new Vector3Int(x, y - 1, 0), stoneRuleTile);
+                    // Check for stone tiles above and below
+                    bool hasStoneAbove = y + 1 < mapHeight && stoneTilemap.GetTile(new Vector3Int(x, y + 1, 0)) == stoneRuleTile;
+                    bool hasStoneBelow = y - 1 >= 0 && stoneTilemap.GetTile(new Vector3Int(x, y - 1, 0)) == stoneRuleTile;
+
+                    // If there's no stone tile above or below, add one
+                    if (!hasStoneAbove && !hasStoneBelow)
+                    {
+                        if (y - 1 >= 0)
+                        {
+                            // If there's room below, add the stone tile below
+                            stoneTilemap.SetTile(new Vector3Int(x, y - 1, 0), stoneRuleTile);
+                        }
+                        else if (y + 1 < mapHeight)
+                        {
+                            // If there's room above, add the stone tile above
+                            stoneTilemap.SetTile(new Vector3Int(x, y + 1, 0), stoneRuleTile);
+                        }
+                    }
                 }
             }
         }
-    }
-
-    bool IsSingleStoneTile(int x, int y)
-    {
-        TileBase currentTile = grassTilemap.GetTile(new Vector3Int(x, y, 0));
-        TileBase tileAbove = grassTilemap.GetTile(new Vector3Int(x, y + 1, 0));
-        TileBase tileBelow = grassTilemap.GetTile(new Vector3Int(x, y - 1, 0));
-
-        // Check if the current tile is stone and neither above nor below is stone
-        return currentTile == stoneRuleTile && tileAbove != stoneRuleTile && tileBelow != stoneRuleTile;
     }
 
     void AddGrassUnderStoneBorders()
@@ -349,14 +356,27 @@ public class MapGenerator : MonoBehaviour
         Vector3 treePosition = new Vector3(x + Random.Range(-0.5f, 0.5f), y + Random.Range(-0.5f, 0.5f), 0);
         GameObject tree = Instantiate(treePrefab, treePosition, Quaternion.identity);
         float scale = Random.Range(minTreeScale, maxTreeScale);
-        tree.transform.localScale = new Vector3(scale, scale, scale);
+
+        // Randomly flip the tree horizontally
+        float flipScaleX = Random.Range(0, 2) == 0 ? -scale : scale;
+        tree.transform.localScale = new Vector3(flipScaleX, scale, scale);
+
+        // Random rotation
+        float rotationAngle = Random.Range(-4f, 4f); // Random rotation within -10 to 10 degrees
+        tree.transform.rotation = Quaternion.Euler(0f, 0f, rotationAngle);
 
         SpriteRenderer treeSpriteRenderer = tree.GetComponent<SpriteRenderer>();
         if (treeSpriteRenderer != null)
         {
-            // Objects with higher world Y positions will have lower "Order in Layer" and thus be rendered behind objects with lower Y positions.
+            // Random color tint
+            Color tint = new Color(Random.Range(0.8f, 1f), Random.Range(0.8f, 1f), Random.Range(0.8f, 1f), 1f); // Random tint
+
+            treeSpriteRenderer.color = tint;
+
+            // Sorting order based on Y position
             treeSpriteRenderer.sortingOrder = Mathf.RoundToInt((mapHeight - treePosition.y) * 100f);
         }
+
         tree.transform.SetParent(treesParent.transform);
     }
 
