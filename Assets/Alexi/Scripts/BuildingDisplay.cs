@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
+using UnityEngine.UI;
 
-public class CardDisplay : MonoBehaviour
+public class BuildingDisplay : MonoBehaviour
 {
-    public Card card;
+    public BuildingCard card;
 
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI descriptionText;
@@ -14,7 +14,7 @@ public class CardDisplay : MonoBehaviour
 
     public TextMeshProUGUI attackText;
     public TextMeshProUGUI healthText;
-    public TextMeshProUGUI movementText;
+    // public TextMeshProUGUI movementText;
 
 
     void Start()
@@ -44,7 +44,7 @@ public class CardDisplay : MonoBehaviour
 
 
     // Fonction pour afficher les informations de la carte
-    public void DisplayCardInformation(Card newcard)
+    public void DisplayBuildingCardInformation(BuildingCard newcard)
     {
         card = newcard;
         UpdateUI(card);
@@ -57,7 +57,7 @@ public class CardDisplay : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    private void UpdateUI(Card card)
+    private void UpdateUI(BuildingCard card)
     {
         nameText.text = card.name;
         descriptionText.text = card.description;
@@ -66,6 +66,5 @@ public class CardDisplay : MonoBehaviour
 
         attackText.text = card.attackPoint.ToString();
         healthText.text = card.healthPoint.ToString();
-        movementText.text = card.movevementPoint.ToString();
     }
 }
