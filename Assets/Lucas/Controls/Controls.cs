@@ -116,6 +116,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SelectPawn"",
+                    ""type"": ""Button"",
+                    ""id"": ""71ed83ea-1c24-49d8-b1de-f71c2756e6f5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -371,6 +380,17 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""SelectCell2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bcb29210-616d-460a-9396-a4b433befa23"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SelectPawn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -389,6 +409,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Gameplay_Drag = m_Gameplay.FindAction("Drag", throwIfNotFound: true);
         m_Gameplay_SelectCell1 = m_Gameplay.FindAction("SelectCell1", throwIfNotFound: true);
         m_Gameplay_SelectCell2 = m_Gameplay.FindAction("SelectCell2", throwIfNotFound: true);
+        m_Gameplay_SelectPawn = m_Gameplay.FindAction("SelectPawn", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -460,6 +481,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Drag;
     private readonly InputAction m_Gameplay_SelectCell1;
     private readonly InputAction m_Gameplay_SelectCell2;
+    private readonly InputAction m_Gameplay_SelectPawn;
     public struct GameplayActions
     {
         private @Controls m_Wrapper;
@@ -474,6 +496,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @Drag => m_Wrapper.m_Gameplay_Drag;
         public InputAction @SelectCell1 => m_Wrapper.m_Gameplay_SelectCell1;
         public InputAction @SelectCell2 => m_Wrapper.m_Gameplay_SelectCell2;
+        public InputAction @SelectPawn => m_Wrapper.m_Gameplay_SelectPawn;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -513,6 +536,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @SelectCell2.started += instance.OnSelectCell2;
             @SelectCell2.performed += instance.OnSelectCell2;
             @SelectCell2.canceled += instance.OnSelectCell2;
+            @SelectPawn.started += instance.OnSelectPawn;
+            @SelectPawn.performed += instance.OnSelectPawn;
+            @SelectPawn.canceled += instance.OnSelectPawn;
         }
 
         private void UnregisterCallbacks(IGameplayActions instance)
@@ -547,6 +573,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @SelectCell2.started -= instance.OnSelectCell2;
             @SelectCell2.performed -= instance.OnSelectCell2;
             @SelectCell2.canceled -= instance.OnSelectCell2;
+            @SelectPawn.started -= instance.OnSelectPawn;
+            @SelectPawn.performed -= instance.OnSelectPawn;
+            @SelectPawn.canceled -= instance.OnSelectPawn;
         }
 
         public void RemoveCallbacks(IGameplayActions instance)
@@ -576,5 +605,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnDrag(InputAction.CallbackContext context);
         void OnSelectCell1(InputAction.CallbackContext context);
         void OnSelectCell2(InputAction.CallbackContext context);
+        void OnSelectPawn(InputAction.CallbackContext context);
     }
 }

@@ -43,6 +43,11 @@ public class GridMap : MonoBehaviour
         _width = width;
     }
 
+    internal void ClearCharacter(int xPos, int yPos)
+    {
+        _grid[xPos, yPos].character = null;
+    }
+
     internal void SetCharacter(MapElement mapElement, int x_pos, int y_pos)
     {
         _grid[x_pos, y_pos].character = mapElement.GetComponent<Character>();

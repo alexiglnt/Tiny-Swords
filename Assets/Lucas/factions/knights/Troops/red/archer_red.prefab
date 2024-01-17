@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6866583280994285985}
   - component: {fileID: 5071727872196998661}
   - component: {fileID: 291893472558496026}
-  - component: {fileID: 6692302975064891669}
+  - component: {fileID: 6422514347477897994}
   m_Layer: 0
   m_Name: archer_red
   m_TagString: Untagged
@@ -123,7 +123,7 @@ MonoBehaviour:
   card: {fileID: 11400000, guid: c91f8d57ec3d8ff43b5539dbab0ee74f, type: 2}
   cardDisplay: {fileID: 621701224107558435, guid: 6f04e73a38442b44e9ca99f308fb572b, type: 3}
   CardCanvas: {fileID: 4834370636999566786, guid: 6f04e73a38442b44e9ca99f308fb572b, type: 3}
---- !u!61 &6692302975064891669
+--- !u!61 &6422514347477897994
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -155,10 +155,10 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.034999996, y: 0.9549999}
+  m_Offset: {x: 0.034999996, y: -0.004999995}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.44444448, y: -0.7733334}
+    pivot: {x: 0.44444448, y: 0.5066666}
     oldSize: {x: 0.63, y: 0.75}
     newSize: {x: 3, y: 3}
     adaptiveTilingThreshold: 0.5
@@ -166,5 +166,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.63, y: 0.74999994}
+  m_Size: {x: 0.63, y: 0.75}
   m_EdgeRadius: 0

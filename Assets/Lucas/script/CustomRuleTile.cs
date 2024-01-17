@@ -46,7 +46,6 @@ public class CustomRuleTile : RuleTile<CustomRuleTile.Neighbor>
         // Vérifier si le tableau specifiedTiles est initialisé
         if (specifiedTiles == null)
         {
-            Debug.LogError("specifiedTiles is null. Please assign it in the inspector.");
             return false;
         }
 
@@ -58,8 +57,6 @@ public class CustomRuleTile : RuleTile<CustomRuleTile.Neighbor>
         }
         else
         {
-            Debug.LogError("tile is null");
-
             // Si tile est null, alors il ne peut pas être dans specifiedTiles
             return false;
         }

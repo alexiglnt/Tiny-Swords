@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4565403018838398253}
   - component: {fileID: 1630848466170816028}
   - component: {fileID: 685249829616523825}
-  - component: {fileID: 2049829138701576189}
+  - component: {fileID: 5881711452514869328}
   m_Layer: 0
   m_Name: warrior_red
   m_TagString: Untagged
@@ -123,7 +123,7 @@ MonoBehaviour:
   card: {fileID: 11400000, guid: 5aba3e3b08fbe5d4f967e11c56d72f8e, type: 2}
   cardDisplay: {fileID: 621701224107558435, guid: 6f04e73a38442b44e9ca99f308fb572b, type: 3}
   CardCanvas: {fileID: 4834370636999566786, guid: 6f04e73a38442b44e9ca99f308fb572b, type: 3}
---- !u!61 &2049829138701576189
+--- !u!61 &5881711452514869328
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -155,10 +155,10 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.060000002, y: 1.015}
+  m_Offset: {x: 0.060000002, y: 0.054999992}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.42307693, y: -0.61538464}
+    pivot: {x: 0.42307693, y: 0.43956047}
     oldSize: {x: 0.78, y: 0.91}
     newSize: {x: 3, y: 3}
     adaptiveTilingThreshold: 0.5
@@ -166,5 +166,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.78, y: 0.9100001}
+  m_Size: {x: 0.78, y: 0.90999997}
   m_EdgeRadius: 0
