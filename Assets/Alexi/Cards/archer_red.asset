@@ -15,6 +15,9 @@ MonoBehaviour:
   name: Red Archer
   description: Archer de la faction rouge
   artwork: {fileID: -2013839719295466167, guid: 2c03c2c045a0997429ea790dd221046b, type: 3}
-  attackPoint: 6
-  healthPoint: 5
-  movevementPoint: 10
+  attackMax: 4
+  scopeMax: 12
+  healthCurrent: 4
+  movementCurrent: 6
+  healthMax: 5
+  movevementMax: 8

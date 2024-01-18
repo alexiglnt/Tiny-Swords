@@ -15,6 +15,7 @@ MonoBehaviour:
   name: Tony Triangle
   description: Version alternantive de Basic Tony
   artwork: {fileID: -241648429852771626, guid: cc6bf40f3c5ac1d43bbd47aa252f9fe6, type: 3}
-  attackPoint: 9
-  healthPoint: 6
-  movevementPoint: 2
+  attackMax: 6
+  healthMax: 6
+  movevementMax: 6
+  scopeMax: 6

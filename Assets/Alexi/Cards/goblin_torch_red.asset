@@ -15,6 +15,9 @@ MonoBehaviour:
   name: Goblin Torch
   description: "Goblin arm\xE9 d'une torche (un vilain gar\xE7on)"
   artwork: {fileID: -883065700146055934, guid: 578c85c181550f44190bcbacca9ac7e9, type: 3}
-  attackPoint: 4
-  healthPoint: 2
-  movevementPoint: 7
+  attackMax: 6
+  scopeMax: 2
+  healthCurrent: 4
+  movementCurrent: 5
+  healthMax: 7
+  movevementMax: 6
