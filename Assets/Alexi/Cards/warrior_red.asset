@@ -15,6 +15,9 @@ MonoBehaviour:
   name: Red Knight
   description: Chevalier de la faction rouge
   artwork: {fileID: 2104702252070677622, guid: 22b5c25dd888acd4fa2232b71f885300, type: 3}
-  attackPoint: 15
-  healthPoint: 8
-  movevementPoint: 1
+  attackMax: 9
+  scopeMax: 1
+  healthCurrent: 5
+  movementCurrent: 2
+  healthMax: 7
+  movevementMax: 3

@@ -11,12 +11,15 @@ public class Card : ScriptableObject
     public Sprite artwork;
 
     // Point d'attaque, de vie et de mouvement
-    public int attackPoint;
-    public int healthPoint;
-    public int movevementPoint;
+    public int attackMax;
+    public int scopeMax;
 
+    public int healthCurrent;
+    public int movementCurrent;
+    public int healthMax;
+    public int movevementMax;
     public void Print()
     {
-        Debug.Log(name + ": " + description + " - " + movevementPoint + " movevementPoint, " + attackPoint + "/" + healthPoint);
+        Debug.Log(name + ": " + description + " - " + movevementMax + " movevementPoint, " + attackMax + "/" + healthMax);
     }
 }

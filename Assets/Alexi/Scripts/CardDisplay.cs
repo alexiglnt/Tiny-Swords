@@ -15,6 +15,10 @@ public class CardDisplay : MonoBehaviour
     public TextMeshProUGUI attackText;
     public TextMeshProUGUI healthText;
     public TextMeshProUGUI movementText;
+    public TextMeshProUGUI scopeText;
+
+    public TextMeshProUGUI movementCurrentText;
+    public TextMeshProUGUI healthCurrentText;
 
 
     void Start()
@@ -64,8 +68,12 @@ public class CardDisplay : MonoBehaviour
 
         artworkImage.sprite = card.artwork;
 
-        attackText.text = card.attackPoint.ToString();
-        healthText.text = card.healthPoint.ToString();
-        movementText.text = card.movevementPoint.ToString();
+        attackText.text = card.attackMax.ToString();
+        scopeText.text = card.scopeMax.ToString();
+
+        healthText.text = card.healthMax.ToString();
+        movementText.text = card.movevementMax.ToString();
+        healthCurrentText.text = card.healthCurrent.ToString();
+        movementCurrentText.text = card.movementCurrent.ToString();
     }
 }
