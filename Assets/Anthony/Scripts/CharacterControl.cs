@@ -1,10 +1,15 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
 
 // Contrôle du personnage, gestion de la sélection et du déplacement.
 public class CharacterControl : MonoBehaviour
 {
+    //////////////////////////////////
+    //          Variables           //
+    //////////////////////////////////
+    
     [SerializeField]
     private Tilemap _targetTilemap; // Tilemap utilisée pour le chemin et les actions du personnage.
 
@@ -20,22 +25,46 @@ public class CharacterControl : MonoBehaviour
     private Pathfinding _pathfinding; // Système de recherche de chemin.
     private Character _selectedCharacter; // Personnage actuellement sélectionné.
 
+    private Controls _controls; // System d'input
+
+
+    //////////////////////////////////
+    //          Fonctions           // 
+    //////////////////////////////////
+    
     private void Awake()
     {
         _pathfinding = _targetTilemap.GetComponent<Pathfinding>(); // Récupération du composant Pathfinding de la Tilemap cible.
+        _controls = new Controls();
     }
 
-    private void Update()
+    private void OnEnable()
     {
-        MouseInput(); // Gestion de l'entrée de la souris.
+        _controls.Enable();
+
+        _controls.Gameplay.SelectCell.performed += SelectCell;
     }
 
-    private void MouseInput()
+    private void OnDisable()
+    {
+        _controls.Disable();
+
+        _controls.Gameplay.SelectCell.performed -= SelectCell;
+    }
+
+    //private void Update()
+    //{
+    //    SelectCell(); // Gestion de l'entrée de la souris.
+    //}
+
+
+
+    private void SelectCell(InputAction.CallbackContext value)
     {
         Vector3 worldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition); // Conversion de la position de la souris en coordonnées mondiales.
         Vector3Int clickPosition = _targetTilemap.WorldToCell(worldPoint); // Conversion des coordonnées mondiales en coordonnées de la Tilemap.
 
-        if (Input.GetMouseButtonDown(1))
+        if (_selectedCharacter == null)
         {
             _highlightTilemap.ClearAllTiles(); // Efface les tuiles de surbrillance.
 
@@ -61,12 +90,8 @@ public class CharacterControl : MonoBehaviour
                 }
             }
         }
-
-        if (Input.GetMouseButtonDown(0))
+        else
         {
-            if (_selectedCharacter == null)
-                return;
-
             _highlightTilemap.ClearAllTiles(); // Efface les tuiles de surbrillance.
 
             List<PathNode> path = _pathfinding.TrackBackPath(_selectedCharacter, clickPosition.x, clickPosition.y); // Récupère le chemin jusqu'à la position cliquée.
@@ -85,8 +110,11 @@ public class CharacterControl : MonoBehaviour
                 Deselect(); // Désélectionne le personnage après le déplacement.
             }
         }
+
+        
     }
 
+    // Désélectionne le personnage
     private void Deselect()
     {
         _selectedCharacter = null;

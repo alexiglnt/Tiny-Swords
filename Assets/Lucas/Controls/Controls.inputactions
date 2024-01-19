@@ -78,18 +78,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "SelectCell1",
+                    "name": "SelectCell",
                     "type": "Button",
                     "id": "ebedd476-fb1e-47fb-8110-242518647139",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "SelectCell2",
-                    "type": "Button",
-                    "id": "f352bee8-0f6b-4ccc-a9cb-58d890e10839",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -344,18 +335,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "SelectCell1",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "c1c16c3c-fbc9-42cc-9b9b-c624d3f920bf",
-                    "path": "<Mouse>/rightButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "SelectCell2",
+                    "action": "SelectCell",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
