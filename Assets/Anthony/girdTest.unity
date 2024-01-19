@@ -1169,7 +1169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 254a30509222a4046b2dcfce24a7cee0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveDistance: 2
+  _moveDistance: 1
   _name: Alexi
 --- !u!114 &1165516531
 MonoBehaviour:
@@ -1284,7 +1284,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1248939282}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d44459a595b2a2f488e92b839c43c50d, type: 3}
   m_Name: 

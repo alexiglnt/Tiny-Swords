@@ -1,59 +1,75 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
-using UnityEditor.Tilemaps;
 using UnityEngine;
 
+// Gère le positionnement et le déplacement d'un élément dans une grille.
 public class MapElement : MonoBehaviour
 {
+    //////////////////////////////////
+    //          Variables           //
+    //////////////////////////////////
+    
+    private GridMap _gridMap; // Référence à la grille.
+    private int _xPos = 0; // Position en X dans la grille.
+    private int _yPos = 0; // Position en Y dans la grille.
 
-    private GridMap _gridMap;
-    private int _xPos = 0;
-    private int _yPos = 0;
 
-    void Start()
+    //////////////////////////////////////////
+    //          Fonctions private           //
+    //////////////////////////////////////////
+    
+    private void Start()
     {
-        SetGrid();
-        PlaceObjectOnGrid();
+        SetGrid(); // Initialise la référence à la grille.
+        PlaceObjectOnGrid(); // Place l'objet sur la grille lors du démarrage.
     }
 
     private void SetGrid()
     {
-        _gridMap = transform.parent.GetComponent<GridMap>();
+        _gridMap = transform.parent.GetComponent<GridMap>(); // Récupère la référence à la grille depuis le parent de l'objet.
     }
 
-    public void MoveCharacter(int targetPosX,  int targetPosY)
-    {
-        RemoveObjectFromGrid();
-        MoveTo(targetPosX, targetPosY);
-        MoveObject();
-    }
-
-    public void MoveObject()
-    {
-        Vector3 worldPostion = new Vector3(_xPos * 1f + 0.5f, _yPos * 1f + 0.5f, -0.5f);
-        transform.position = worldPostion;
-    }
-
+    // Met à jour la position dans la grille et place l'objet à la nouvelle position.
     private void MoveTo(int targetPosX, int targetPosY)
     {
-        _gridMap.SetCharacter(this, targetPosX, targetPosY);
-        _xPos = targetPosX;
-        _yPos = targetPosY;
+        _gridMap.SetCharacter(this, targetPosX, targetPosY); // Met à jour la position du personnage dans la grille.
+        _xPos = targetPosX; // Met à jour la position en X.
+        _yPos = targetPosY; // Met à jour la position en Y.
     }
 
+    // Place l'objet sur la grille en fonction de sa position initiale.
     private void PlaceObjectOnGrid()
     {
         Transform t = transform;
         Vector3 pos = t.position;
-        _xPos = (int)pos.x;
-        _yPos = (int)pos.y;
-        _gridMap.SetCharacter(this, _xPos, _yPos);
+        _xPos = (int)pos.x; // Obtient la position en X à partir de la position du transform.
+        _yPos = (int)pos.y; // Obtient la position en Y à partir de la position du transform.
+        _gridMap.SetCharacter(this, _xPos, _yPos); // Place l'objet sur la grille.
     }
 
+    // Retire l'objet de sa position actuelle dans la grille.
     private void RemoveObjectFromGrid()
     {
-        _gridMap.ClearCharacter(_xPos, _yPos);
+        _gridMap.ClearCharacter(_xPos, _yPos); // Retire l'objet de la grille.
     }
+
+
+    /////////////////////////////////////////
+    //          Fonctions public           // 
+    /////////////////////////////////////////
+    
+    // Déplace le personnage à la position spécifiée dans la grille.
+    public void MoveCharacter(int targetPosX, int targetPosY)
+    {
+        RemoveObjectFromGrid(); // Retire l'objet de l'ancienne position dans la grille.
+        MoveTo(targetPosX, targetPosY); // Met à jour la position dans la grille.
+        MoveObject(); // Déplace l'objet dans l'espace du monde.
+    }
+
+    // Déplace l'objet dans l'espace du monde en fonction de sa position dans la grille.
+    public void MoveObject()
+    {
+        Vector3 worldPosition = new Vector3(_xPos * 1f + 0.5f, _yPos * 1f + 0.5f, -0.5f);
+        transform.position = worldPosition;
+    }
+
+    
 }

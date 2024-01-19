@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
-
+// Représente un nœud dans le chemin avec des informations telles que la position, les valeurs g, h et le nœud parent.
 public class PathNode
 {
     public int xPos;
@@ -29,6 +29,7 @@ public class PathNode
         this.yPos = yPos;
     }
 
+    // Réinitialise les valeurs du nœud.
     public void Clear()
     {
         gValue = 0;
@@ -37,17 +38,28 @@ public class PathNode
     }
 }
 
+// Classe responsable du calcul des chemins sur la grille.
 [RequireComponent(typeof(GridMap))]
 public class Pathfinding : MonoBehaviour
 {
+    //////////////////////////////////
+    //          Variables           // 
+    //////////////////////////////////
+
     GridMap _gridMap;
     PathNode[,] _pathNodes;
+
+
+    //////////////////////////////////////////
+    //          Fonctions private           // 
+    //////////////////////////////////////////
 
     private void Start()
     {
         Init();
     }
 
+    // Initialise la classe avec une référence à la grille.
     private void Init()
     {
         if (_gridMap == null)
@@ -61,16 +73,46 @@ public class Pathfinding : MonoBehaviour
         {
             for (int y = 0; y < _gridMap.Height; y++)
             {
-
-                _pathNodes[x,y] = new PathNode(x,y);
+                _pathNodes[x, y] = new PathNode(x, y);
             }
         }
     }
 
-    public void CalculateWalkableTerrain(int startX, int startY, int range, ref List<PathNode> toHighlight) 
+    // Retrace le chemin à partir du nœud final vers le nœud de départ.
+    private List<PathNode> RetracePath(PathNode startNode, PathNode endNode)
+    {
+        List<PathNode> path = new List<PathNode>();
+
+        PathNode currentNode = endNode;
+
+        while (currentNode != startNode)
+        {
+            path.Add(currentNode);
+            currentNode = currentNode.parentNode;
+        }
+        path.Reverse();
+
+        return path;
+    }
+
+    // Calcule la distance entre deux nœuds.
+    private int CalculateDistance(PathNode current, PathNode target)
+    {
+        int distX = Mathf.Abs(current.xPos - target.xPos);
+        int distY = Mathf.Abs(current.yPos - target.yPos);
+
+        return 10 * distY + 10 * distX;
+    }
+
+
+    /////////////////////////////////////////
+    //          Fonctions public           // 
+    /////////////////////////////////////////
+
+    // Calcule les cellules marchables dans la portée spécifiée autour du point de départ.
+    public void CalculateWalkableTerrain(int startX, int startY, int range, ref List<PathNode> toHighlight)
     {
         range *= 10;
-
 
         PathNode startNode = _pathNodes[startX, startY];
 
@@ -98,7 +140,7 @@ public class Pathfinding : MonoBehaviour
                     if (_gridMap.CheckPosition(currentNode.xPos + x, currentNode.yPos + y) == false)
                         continue;
 
-                    // Test pour eviter les voisins dans les angles
+                    // Test pour éviter les voisins dans les angles
                     if (x != 0 && y != 0)
                         continue;
 
@@ -136,7 +178,8 @@ public class Pathfinding : MonoBehaviour
         }
     }
 
-    internal void Clear()
+    // Réinitialise les nœuds de chemin.
+    public void Clear()
     {
         for (int x = 0; x < _gridMap.Width; x++)
         {
@@ -147,6 +190,7 @@ public class Pathfinding : MonoBehaviour
         }
     }
 
+    // Retrace le chemin à partir du nœud final vers le nœud de départ.
     public List<PathNode> TrackBackPath(Character selectedCharacter, int x, int y)
     {
         List<PathNode> path = new List<PathNode>();
@@ -154,22 +198,21 @@ public class Pathfinding : MonoBehaviour
         if (!_gridMap.CheckPosition(x, y))
             return null;
 
-        PathNode currentNode = _pathNodes[x,y];
+        PathNode currentNode = _pathNodes[x, y];
 
-
-        while (currentNode.parentNode != null) 
-        { 
-           path.Add(currentNode);
-           currentNode = currentNode.parentNode;
+        while (currentNode.parentNode != null)
+        {
+            path.Add(currentNode);
+            currentNode = currentNode.parentNode;
         }
 
         return path;
     }
 
+    // Trouve un chemin entre deux points sur la grille.
     public List<PathNode> FindPath(int startX, int startY, int endX, int endY)
     {
-
-        // Target cell outside the grid
+        // La cellule cible est en dehors de la grille
         if (!_gridMap.CheckPosition(endX, endY))
         {
             return null;
@@ -177,7 +220,6 @@ public class Pathfinding : MonoBehaviour
 
         PathNode startNode = _pathNodes[startX, startY];
         PathNode endNode = _pathNodes[endX, endY];
-
 
         List<PathNode> openList = new List<PathNode>();
         List<PathNode> closeList = new List<PathNode>();
@@ -190,7 +232,7 @@ public class Pathfinding : MonoBehaviour
 
             for (int i = 0; i < openList.Count; i++)
             {
-                if(currentNode.fValue > openList[i].fValue)
+                if (currentNode.fValue > openList[i].fValue)
                 {
                     currentNode = openList[i];
                 }
@@ -201,30 +243,29 @@ public class Pathfinding : MonoBehaviour
                     currentNode = openList[i];
                 }
             }
-            
-            openList.Remove(currentNode); 
+
+            openList.Remove(currentNode);
             closeList.Add(currentNode);
-            
-            if (currentNode == endNode) 
+
+            if (currentNode == endNode)
             {
-                // We finished searching ours path
+                // La recherche du chemin est terminée
                 return RetracePath(startNode, endNode);
             }
-
 
             List<PathNode> neighbourNodes = new List<PathNode>();
 
             for (int x = -1; x < 2; x++)
             {
-                for (int y = -1; y < 2; y++) 
-                { 
-                    if(x == 0 && y == 0)
+                for (int y = -1; y < 2; y++)
+                {
+                    if (x == 0 && y == 0)
                         continue;
 
                     if (_gridMap.CheckPosition(currentNode.xPos + x, currentNode.yPos + y) == false)
                         continue;
 
-                    // Test pour eviter les voisins dans les angles
+                    // Test pour éviter les voisins dans les angles
                     if (x != 0 && y != 0)
                         continue;
 
@@ -248,7 +289,6 @@ public class Pathfinding : MonoBehaviour
                     neighbourNodes[i].hValue = CalculateDistance(neighbourNodes[i], endNode);
                     neighbourNodes[i].parentNode = currentNode;
 
-
                     if (!openList.Contains(neighbourNodes[i]))
                         openList.Add(neighbourNodes[i]);
                 }
@@ -256,38 +296,5 @@ public class Pathfinding : MonoBehaviour
         }
 
         return null;
-    }
-
-    private List<PathNode> RetracePath(PathNode startNode, PathNode endNode)
-    {
-        List<PathNode> path = new List<PathNode> ();
-
-        PathNode currentNode = endNode;
-
-        while (currentNode != startNode) 
-        { 
-            path.Add(currentNode);
-            currentNode = currentNode.parentNode;
-        }
-        path.Reverse();
-
-        return path;
-    }
-
-    private int CalculateDistance(PathNode current, PathNode target)
-    {
-        int distX = Mathf.Abs(current.xPos - target.xPos);
-        int distY = Mathf.Abs(current.yPos - target.yPos);
-
-        return 10 * distY + 10 * distX;
-
-        //if (distX > distY)
-        //{
-        //    return 14 * distY + 10 * (distX - distY);
-        //}
-
-        //return 14 * distX + 10 * (distY - distX);
-
-
     }
 }
