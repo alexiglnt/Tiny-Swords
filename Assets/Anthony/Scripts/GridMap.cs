@@ -113,6 +113,6 @@ public class GridMap : MonoBehaviour
     // Vérifie si la position spécifiée dans la grille est marchable.
     public bool CheckWalkable(int xPos, int yPos)
     {
-        return _grid[xPos, yPos].tileId == 0;
+        return _grid[xPos, yPos].tileId == 0 && _grid[xPos, yPos].character == null;
     }
 }
