@@ -6,8 +6,9 @@ public class MapElement : MonoBehaviour
     //////////////////////////////////
     //          Variables           //
     //////////////////////////////////
-    
+
     private GridMap _gridMap; // Référence à la grille.
+
     private int _xPos = 0; // Position en X dans la grille.
     private int _yPos = 0; // Position en Y dans la grille.
 
@@ -24,7 +25,7 @@ public class MapElement : MonoBehaviour
 
     private void SetGrid()
     {
-        _gridMap = transform.parent.GetComponent<GridMap>(); // Récupère la référence à la grille depuis le parent de l'objet.
+        _gridMap = GridManager.Instance.GetComponent<GridMap>(); // Récupère la référence à la grille depuis le parent de l'objet.
     }
 
     // Met à jour la position dans la grille et place l'objet à la nouvelle position.
