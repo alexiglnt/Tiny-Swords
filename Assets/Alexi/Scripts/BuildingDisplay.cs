@@ -14,6 +14,7 @@ public class BuildingDisplay : MonoBehaviour
 
     public TextMeshProUGUI attackText;
     public TextMeshProUGUI healthText;
+    public TextMeshProUGUI healthTextCurrent;
     // public TextMeshProUGUI movementText;
 
 
@@ -66,5 +67,6 @@ public class BuildingDisplay : MonoBehaviour
 
         attackText.text = card.attackPoint.ToString();
         healthText.text = card.healthPoint.ToString();
+        healthTextCurrent.text = card.healthPointCurrent.ToString();
     }
 }

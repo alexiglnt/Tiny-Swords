@@ -16,4 +16,6 @@ MonoBehaviour:
   description: Tour d'archer
   artwork: {fileID: 6365801729022498290, guid: 3d48cb37dbc1b284ea12229d3266b07c, type: 3}
   attackPoint: 5
-  healthPoint: 3
+  healthPoint: 9
+  attackPointCurrent: 4
+  healthPointCurrent: 6
