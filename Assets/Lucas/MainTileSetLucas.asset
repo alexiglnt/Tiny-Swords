@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd3d39c6871eb1a418bc38c61940d8f4, type: 3}
+  m_Name: MainTileSetLucas
+  m_EditorClassIdentifier: 
+  tiles:
+  - {fileID: 11400000, guid: 724894144f6cc2844a5a68956e194a5b, type: 2}
+  - {fileID: 11400000, guid: dedd5512d44f3d04daf16a02f88143f6, type: 2}
+  - {fileID: 11400000, guid: 7031b5f779517d54983e2bc996c467ca, type: 2}
+  - {fileID: 11400000, guid: 453313eeb72cf9746b43bd9b21243301, type: 2}

@@ -9,8 +9,10 @@ public class PawnController : MonoBehaviour
     public Animator animator;
     private Controls controls;
     private TreeController currentTargetTree;
+    private SheepController currentTargetSheep;
     public AudioSource audioSource;
     public AudioClip chopSound;
+    public AudioClip killSound;
 
     private SpriteRenderer spriteRenderer;
     public Color selectedColor = Color.yellow;
@@ -45,14 +47,23 @@ public class PawnController : MonoBehaviour
     {
         RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
         bool isPawnClicked = ColliderIsPawn(hit);
-
-        if (isPawnClicked && !IsChopping())
+        
+        if (isPawnClicked && !IsBusy())
         {
             TogglePawnSelection();
         }
-        else if (selectedPawn != null && hit.collider != null && hit.collider.GetComponent<TreeController>() != null)
+        else if (selectedPawn != null)
         {
-            selectedPawn.StartChopping(hit.collider.GetComponent<TreeController>());
+            // Check if a tree is clicked
+            if (hit.collider != null && hit.collider.GetComponent<TreeController>() != null)
+            {
+                selectedPawn.StartAction(hit.collider.GetComponent<TreeController>());
+            }
+            // Check if a sheep is clicked
+            else if (hit.collider != null && hit.collider.GetComponent<SheepController>() != null)
+            {
+                selectedPawn.StartAction(hit.collider.GetComponent<SheepController>());
+            }
         }
     }
 
@@ -94,16 +105,34 @@ public class PawnController : MonoBehaviour
         Debug.Log("Pawn starts chopping and is deselected");
     }
 
-    public void OnChopAnimationHit()
+    public void StartButchering(SheepController sheep)
+    {
+        currentTargetSheep = sheep;
+        animator.Play("Kill");
+
+        // Deselect the pawn and update visuals
+        isSelected = false;
+        UpdateSelectionVisual(isSelected);
+        selectedPawn = null; // Clear the static reference to this pawn
+
+        Debug.Log("Pawn starts butchering and is deselected");
+    }
+
+    public void OnAnimationHit()
     {
         if (currentTargetTree != null && currentTargetTree.IsAlive)
         {
             currentTargetTree.ReceiveDamage();
             PlayChopSound();
         }
+        else if (currentTargetSheep != null && currentTargetSheep.IsAlive)
+        {
+            currentTargetSheep.ReceiveDamage();
+            PlayKillSound();
+        }
         else
         {
-            StopChopping();
+            StopAction();
         }
     }
 
@@ -115,13 +144,27 @@ public class PawnController : MonoBehaviour
         }
     }
 
-    private void StopChopping()
+    private void PlayKillSound()
     {
-        animator.Play("Idle");
-        currentTargetTree = null;
+        if (audioSource != null && killSound != null)
+        {
+            audioSource.PlayOneShot(killSound);
+        }
     }
 
-    private bool IsChopping()
+    public void StartAction(object target)
+    {
+        if (target is TreeController tree)
+        {
+            StartChopping(tree);
+        }
+        else if (target is SheepController sheep)
+        {
+            StartButchering(sheep); // Reuse chopping action for sheep
+        }
+    }
+
+    private bool IsBusy()
     {
         return currentTargetTree != null;
     }
@@ -131,7 +174,22 @@ public class PawnController : MonoBehaviour
     {
         if (currentTargetTree != null && !currentTargetTree.IsAlive)
         {
-            StopChopping();
+            StopAction();
         }
+    }    
+    
+    private void CheckSheepAlive()
+    {
+        if (currentTargetSheep != null && !currentTargetSheep.IsAlive)
+        {
+            StopAction();
+        }
+    }
+
+    private void StopAction()
+    {
+        animator.Play("Idle");
+        currentTargetTree = null;
+        currentTargetSheep = null;
     }
 }

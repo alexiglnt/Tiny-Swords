@@ -52,5 +52,12 @@ public class SaveLoadMap : MonoBehaviour
     {
         _gridManager.Clear();  // Efface la grille avant de charger.
         _mapData.Load(grid);  // Charge les données de la carte à partir de la grille spécifiée.
+        _gridManager.UpdateTileMap();  // Met à jour le Tilemap pour refléter l'état actuel de la grille.
+    }
+
+    // Charge selement la GridMap en lisant les données de la grille et en les appliquant à la grille .
+    public void LoadGridMap()
+    {
+        _mapData.Load(_gridMap);  // Charge les données de la carte à partir de la grille spécifiée.
     }
 }

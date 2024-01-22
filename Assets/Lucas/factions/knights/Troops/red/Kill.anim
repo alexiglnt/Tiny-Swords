@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Chop
+  m_Name: Kill
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -96,7 +96,7 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0.6
-    functionName: CheckTreeAlive
+    functionName: CheckSheepAlive
     data: 
     objectReferenceParameter: {fileID: 645030203921335384, guid: 5e09f5eef2e3a434d9c538af9a179a0a, type: 3}
     floatParameter: 0

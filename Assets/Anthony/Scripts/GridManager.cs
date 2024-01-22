@@ -19,6 +19,9 @@ public class GridManager : Singleton<GridManager>
     [SerializeField]
     private TileSet _tileSet;   // Ensemble de tuiles utilisé pour mapper les indices de tuiles aux tuiles réelles.
 
+    [SerializeField]
+    private bool _useMapDataOfSaveLoadMap;   // Si la carte ce génre avec les données de la sauvegarde.
+
 
     //////////////////////////////////////////
     //          Fonctions private           // 
@@ -29,11 +32,15 @@ public class GridManager : Singleton<GridManager>
         _grid = GetComponent<GridMap>();
         _saveLoadMap = GetComponent<SaveLoadMap>();
 
-        // Charge la carte à partir d'une sauvegarde.
-        _saveLoadMap.Load(_grid);
+        if (_useMapDataOfSaveLoadMap)
+        {
+            // Charge la carte à partir d'une sauvegarde.
+            _saveLoadMap.Load(_grid);
 
-        // Met à jour le Tilemap pour refléter l'état actuel de la grille.
-        UpdateTileMap();
+            // Met à jour le Tilemap pour refléter l'état actuel de la grille.
+            UpdateTileMap();
+        }
+        
     }
 
     // Met à jour la tuile à la position spécifiée dans le Tilemap en fonction de la grille.
@@ -68,7 +75,7 @@ public class GridManager : Singleton<GridManager>
     }
 
     // Met à jour le Tilemap en parcourant toute la grille.
-    private void UpdateTileMap()
+    public void UpdateTileMap()
     {
         for (int x = 0; x < _grid.Width; x++)
         {

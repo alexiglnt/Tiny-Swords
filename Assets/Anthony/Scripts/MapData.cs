@@ -82,6 +82,8 @@ public class MapData : ScriptableObject
                 this.map.Add(map[x, y]); // Ajoute les données du tableau à la liste.
             }
         }
+#if UNITY_EDITOR
         UnityEditor.EditorUtility.SetDirty(this); // Marque l'objet scriptable comme modifié pour l'éditeur Unity.
+#endif
     }
 }

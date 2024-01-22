@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor.U2D.Aseprite;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -74,9 +75,10 @@ public class MapGenerator : MonoBehaviour
 
     public float baseRockSpawnChance = 0.1f;
 
+
     private void Start()
     {
-        
+
         // Generate random offsets for map
         offsetX = Random.Range(0f, 9999f);
         offsetY = Random.Range(0f, 9999f);
@@ -137,6 +139,12 @@ public class MapGenerator : MonoBehaviour
         foamTilemap.RefreshAllTiles();
         grassTilemap.RefreshAllTiles();
         stoneTilemap.RefreshAllTiles();
+
+
+        GridManager.Instance.GetComponent<SaveLoadMap>().Save();
+        GridManager.Instance.GetComponent<SaveLoadMap>().LoadGridMap();
+
+
     }
 
 
@@ -148,6 +156,7 @@ public class MapGenerator : MonoBehaviour
         if (perlinValue < 0.3f)
         {
             waterTilemap.SetTile(new Vector3Int(x, y, 0), waterRuleTile);
+
         }
         else if (perlinValue < 0.6f)
         {
@@ -158,6 +167,7 @@ public class MapGenerator : MonoBehaviour
             stoneTilemap.SetTile(new Vector3Int(x, y, 0), stoneRuleTile);
         }
     }
+
 
     void AddFoamToShore()
     {
@@ -345,7 +355,6 @@ public class MapGenerator : MonoBehaviour
         TileBase waterTile = waterTilemap.GetTile(new Vector3Int(x, y, 0));
 
         bool canPlace = grassTile == grassRuleTile && stoneTile == null && waterTile == null;
-
         return canPlace;
     }
 
