@@ -36,18 +36,6 @@ public class GridManager : Singleton<GridManager>
         UpdateTileMap();
     }
 
-    // Met à jour le Tilemap en parcourant toute la grille.
-    private void UpdateTileMap()
-    {
-        for (int x = 0; x < _grid.Width; x++)
-        {
-            for (int y = 0; y < _grid.Height; y++)
-            {
-                UpdateTile(x, y);
-            }
-        }
-    }
-
     // Met à jour la tuile à la position spécifiée dans le Tilemap en fonction de la grille.
     private void UpdateTile(int x, int y)
     {
@@ -76,6 +64,18 @@ public class GridManager : Singleton<GridManager>
         else
         {
             _groundTilemap.ClearAllTiles();
+        }
+    }
+
+    // Met à jour le Tilemap en parcourant toute la grille.
+    private void UpdateTileMap()
+    {
+        for (int x = 0; x < _grid.Width; x++)
+        {
+            for (int y = 0; y < _grid.Height; y++)
+            {
+                UpdateTile(x, y);
+            }
         }
     }
 
