@@ -3,17 +3,18 @@ using UnityEngine.Tilemaps;
 
 // Ce script gère les tuils sur la tilemap
 [RequireComponent(typeof(GridMap))]
-[RequireComponent(typeof(Tilemap))]
-public class GridManager : MonoBehaviour
+//[RequireComponent(typeof(Tilemap))]
+public class GridManager : Singleton<GridManager>
 {
-
     //////////////////////////////////
     //          Variables           // 
     //////////////////////////////////
-
-    private Tilemap _tilemap;  // Référence au Tilemap Unity pour les graphiques de la grille.
+    
     private GridMap _grid;      // Référence à la classe GridMap qui gère la logique de la grille.
     private SaveLoadMap _saveLoadMap;  // Référence à la classe qui gère la sauvegarde et le chargement de la carte.
+
+    [SerializeField]
+    private Tilemap _groundTilemap;  // Référence au Tilemap Unity pour les graphiques de la grille.
 
     [SerializeField]
     private TileSet _tileSet;   // Ensemble de tuiles utilisé pour mapper les indices de tuiles aux tuiles réelles.
@@ -23,9 +24,10 @@ public class GridManager : MonoBehaviour
     //          Fonctions private           // 
     //////////////////////////////////////////
 
-    private void Awake()
+    protected override void Awake()
     {
-        _tilemap = GetComponent<Tilemap>();
+        base.Awake();
+
         _grid = GetComponent<GridMap>();
         _saveLoadMap = GetComponent<SaveLoadMap>();
 
@@ -56,7 +58,7 @@ public class GridManager : MonoBehaviour
         if (tileId == -1)
             return;
 
-        _tilemap.SetTile(new Vector3Int(x, y, 0), _tileSet.tiles[tileId]);
+        _groundTilemap.SetTile(new Vector3Int(x, y, 0), _tileSet.tiles[tileId]);
     }
 
 
@@ -67,15 +69,15 @@ public class GridManager : MonoBehaviour
     // Efface le Tilemap.
     public void Clear()
     {
-        if (_tilemap == null)
+        if (_groundTilemap == null)
         {
-            _tilemap = GetComponent<Tilemap>();
-            _tilemap.ClearAllTiles();
-            _tilemap = null;
+            _groundTilemap = GetComponent<Tilemap>();
+            _groundTilemap.ClearAllTiles();
+            _groundTilemap = null;
         }
         else
         {
-            _tilemap.ClearAllTiles();
+            _groundTilemap.ClearAllTiles();
         }
     }
 
@@ -85,17 +87,17 @@ public class GridManager : MonoBehaviour
         if (tileId == -1)
             return;
 
-        if (_tilemap == null)
+        if (_groundTilemap == null)
         {
-            _tilemap = GetComponent<Tilemap>();
+            _groundTilemap = GetComponent<Tilemap>();
 
-            _tilemap.SetTile(new Vector3Int(x, y, 0), _tileSet.tiles[tileId]);
+            _groundTilemap.SetTile(new Vector3Int(x, y, 0), _tileSet.tiles[tileId]);
 
-            _tilemap = null;
+            _groundTilemap = null;
         }
         else
         {
-            _tilemap.SetTile(new Vector3Int(x, y, 0), _tileSet.tiles[tileId]);
+            _groundTilemap.SetTile(new Vector3Int(x, y, 0), _tileSet.tiles[tileId]);
         }
     }
 
@@ -122,24 +124,24 @@ public class GridManager : MonoBehaviour
     // Lit les données du Tilemap et retourne une matrice d'indices de tuiles.
     public int[,] ReadTileMap()
     {
-        if (_tilemap == null)
-            _tilemap = GetComponent<Tilemap>();
+        if (_groundTilemap == null)
+            _groundTilemap = GetComponent<Tilemap>();
 
-        int size_x = _tilemap.size.x;
-        int size_y = _tilemap.size.y;
+        int size_x = _groundTilemap.size.x;
+        int size_y = _groundTilemap.size.y;
         int[,] tilemapData = new int[size_x, size_y];
 
         for (int x = 0; x < size_x; x++)
         {
             for (int y = 0; y < size_y; y++)
             {
-                TileBase tileBase = _tilemap.GetTile(new Vector3Int(x, y, 0));
+                TileBase tileBase = _groundTilemap.GetTile(new Vector3Int(x, y, 0));
                 int indexTile = _tileSet.tiles.FindIndex(t => t == tileBase);
                 tilemapData[x, y] = indexTile;
             }
         }
 
-        _tilemap = null;
+        _groundTilemap = null;
         return tilemapData;
     }
 }

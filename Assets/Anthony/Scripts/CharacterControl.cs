@@ -34,7 +34,7 @@ public class CharacterControl : MonoBehaviour
     
     private void Awake()
     {
-        _pathfinding = _targetTilemap.GetComponent<Pathfinding>(); // Récupération du composant Pathfinding de la Tilemap cible.
+        _pathfinding = _gridManager.GetComponent<Pathfinding>(); // Récupération du composant Pathfinding de la Tilemap cible.
         _controls = new Controls();
     }
 
