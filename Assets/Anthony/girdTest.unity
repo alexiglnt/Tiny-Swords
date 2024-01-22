@@ -1290,7 +1290,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _targetTilemap: {fileID: 401360604}
   _highlightTilemap: {fileID: 1296114543}
-  _highlightTile: {fileID: 11400000, guid: 64cf59da452f6a1458e3ebe64c261334, type: 2}
+  _highlightTile: {fileID: 11400000, guid: 4218b61c1f67931489351a16c117432c, type: 2}
   _gridManager: {fileID: 401360606}
 --- !u!1 &1296114540
 GameObject:
