@@ -24,10 +24,8 @@ public class GridManager : Singleton<GridManager>
     //          Fonctions private           // 
     //////////////////////////////////////////
 
-    protected override void Awake()
+    protected void Awake()
     {
-        base.Awake();
-
         _grid = GetComponent<GridMap>();
         _saveLoadMap = GetComponent<SaveLoadMap>();
 

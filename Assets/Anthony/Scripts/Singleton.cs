@@ -28,21 +28,4 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
             return instance;
         }
     }
-
-    // Méthode d'initialisation (peut être utilisée pour des opérations spécifiques au Singleton)
-    protected virtual void Awake()
-    {
-        // Vérifier si une instance existe déjà
-        if (instance == null)
-        {
-            // Si non, définir cette instance comme l'instance unique
-            instance = this as T;
-            DontDestroyOnLoad(gameObject); // Optionnel : permet de conserver l'objet Singleton lors des changements de scène
-        }
-        else
-        {
-            // Si une instance existe déjà, détruire celle-ci
-            Destroy(gameObject);
-        }
-    }
 }
