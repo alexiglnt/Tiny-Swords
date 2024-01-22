@@ -122,24 +122,46 @@ public class GridManager : Singleton<GridManager>
     // Lit les données du Tilemap et retourne une matrice d'indices de tuiles.
     public int[,] ReadTileMap()
     {
+        int[,] tilemapData = new int[0, 0];
+
         if (_groundTilemap == null)
+        {
+
             _groundTilemap = GetComponent<Tilemap>();
 
-        int size_x = _groundTilemap.size.x;
-        int size_y = _groundTilemap.size.y;
-        int[,] tilemapData = new int[size_x, size_y];
+            int size_x = _groundTilemap.size.x;
+            int size_y = _groundTilemap.size.y;
+            tilemapData = new int[size_x, size_y];
 
-        for (int x = 0; x < size_x; x++)
-        {
-            for (int y = 0; y < size_y; y++)
+            for (int x = 0; x < size_x; x++)
             {
-                TileBase tileBase = _groundTilemap.GetTile(new Vector3Int(x, y, 0));
-                int indexTile = _tileSet.tiles.FindIndex(t => t == tileBase);
-                tilemapData[x, y] = indexTile;
+                for (int y = 0; y < size_y; y++)
+                {
+                    TileBase tileBase = _groundTilemap.GetTile(new Vector3Int(x, y, 0));
+                    int indexTile = _tileSet.tiles.FindIndex(t => t == tileBase);
+                    tilemapData[x, y] = indexTile;
+                }
+            }
+
+            _groundTilemap = null;
+        }
+        else
+        {
+            int size_x = _groundTilemap.size.x;
+            int size_y = _groundTilemap.size.y;
+            tilemapData = new int[size_x, size_y];
+
+            for (int x = 0; x < size_x; x++)
+            {
+                for (int y = 0; y < size_y; y++)
+                {
+                    TileBase tileBase = _groundTilemap.GetTile(new Vector3Int(x, y, 0));
+                    int indexTile = _tileSet.tiles.FindIndex(t => t == tileBase);
+                    tilemapData[x, y] = indexTile;
+                }
             }
         }
 
-        _groundTilemap = null;
         return tilemapData;
     }
 }
