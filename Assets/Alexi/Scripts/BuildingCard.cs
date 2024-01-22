@@ -13,6 +13,7 @@ public class BuildingCard : ScriptableObject
     // Point d'attaque, de vie et de mouvement
     public int attackPoint;
     public int healthPoint;
+    public int healthPointCurrent;
 
     public void Print()
     {

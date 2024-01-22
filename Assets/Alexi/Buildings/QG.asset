@@ -16,4 +16,6 @@ MonoBehaviour:
   description: Base principale
   artwork: {fileID: 21300000, guid: 5e81626ecc7867343ade8a8d5b2abf3e, type: 3}
   attackPoint: 6
-  healthPoint: 2
+  healthPoint: 21
+  attackPointCurrent: 15
+  healthPointCurrent: 14
