@@ -1,6 +1,7 @@
 using UnityEngine;
 
 // Classe représentant un personnage dans le jeu.
+[RequireComponent(typeof(MapElement))]
 public class Character : MonoBehaviour
 {
     [SerializeField]

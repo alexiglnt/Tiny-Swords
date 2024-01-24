@@ -39,43 +39,35 @@ public class PathNode
 }
 
 // Classe responsable du calcul des chemins sur la grille.
-[RequireComponent(typeof(GridMap))]
-public class Pathfinding : MonoBehaviour
+public class Pathfinding
 {
     //////////////////////////////////
     //          Variables           // 
     //////////////////////////////////
 
-    GridMap _gridMap;
-    PathNode[,] _pathNodes;
+    private GridMap _gridMap;
+    private PathNode[,] _pathNodes;
 
+
+    public Pathfinding()
+    {
+        Init();
+    }
 
     //////////////////////////////////////////
     //          Fonctions private           // 
     //////////////////////////////////////////
 
-    private void Start()
-    {
-        Init();
-    }
 
     // Initialise la classe avec une référence à la grille.
     private void Init()
     {
         if (_gridMap == null)
         {
-            _gridMap = GetComponent<GridMap>();
+            _gridMap = GridManager.Instance.GroundGridMap;
         }
 
-        _pathNodes = new PathNode[_gridMap.Width, _gridMap.Height];
-
-        for (int x = 0; x < _gridMap.Width; x++)
-        {
-            for (int y = 0; y < _gridMap.Height; y++)
-            {
-                _pathNodes[x, y] = new PathNode(x, y);
-            }
-        }
+        UpdateGrid();
     }
 
     // Retrace le chemin à partir du nœud final vers le nœud de départ.
@@ -147,7 +139,7 @@ public class Pathfinding : MonoBehaviour
                     neighbourNodes.Add(_pathNodes[currentNode.xPos + x, currentNode.yPos + y]);
                 }
             }
-
+            
             for (int i = 0; i < neighbourNodes.Count; i++)
             {
                 if (closeList.Contains(neighbourNodes[i]))
@@ -167,8 +159,9 @@ public class Pathfinding : MonoBehaviour
                     neighbourNodes[i].parentNode = currentNode;
 
                     if (!openList.Contains(neighbourNodes[i]))
-                        openList.Add(neighbourNodes[i]);
+                        openList.Add(neighbourNodes[i]); 
                 }
+                
             }
         }
 
@@ -296,5 +289,18 @@ public class Pathfinding : MonoBehaviour
         }
 
         return null;
+    }
+
+    public void UpdateGrid()
+    {
+        _pathNodes = new PathNode[_gridMap.Width, _gridMap.Height];
+
+        for (int x = 0; x < _gridMap.Width; x++)
+        {
+            for (int y = 0; y < _gridMap.Height; y++)
+            {
+                _pathNodes[x, y] = new PathNode(x, y);
+            }
+        }
     }
 }

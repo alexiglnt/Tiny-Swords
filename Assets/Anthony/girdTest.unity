@@ -834,7 +834,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f365206d32e2bf45af7536c3dd48139, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gridMap: {fileID: 1394758978}
 --- !u!114 &425905860
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -947,7 +946,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f365206d32e2bf45af7536c3dd48139, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gridMap: {fileID: 1394758978}
 --- !u!114 &789564811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1126,7 +1124,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f365206d32e2bf45af7536c3dd48139, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gridMap: {fileID: 1394758978}
 --- !u!1 &1248939282
 GameObject:
   m_ObjectHideFlags: 0
@@ -1234,8 +1231,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _targetTilemap: {fileID: 401360604}
   _highlightTilemap: {fileID: 1296114543}
-  _highlightTile: {fileID: 11400000, guid: 64cf59da452f6a1458e3ebe64c261334, type: 2}
-  _gridManager: {fileID: 1394758976}
+  _highlightTile: {fileID: 11400000, guid: 4218b61c1f67931489351a16c117432c, type: 2}
 --- !u!1 &1296114540
 GameObject:
   m_ObjectHideFlags: 0
@@ -1410,9 +1406,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1394758975}
-  - component: {fileID: 1394758978}
   - component: {fileID: 1394758976}
-  - component: {fileID: 1394758980}
   - component: {fileID: 1394758979}
   m_Layer: 0
   m_Name: GridManager
@@ -1450,18 +1444,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _groundTilemap: {fileID: 401360604}
   _tileSet: {fileID: 11400000, guid: 9b31c8f2ca80a7c4381329c2e38eae86, type: 2}
---- !u!114 &1394758978
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1394758974}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac6818fbbf2f1b648a66efb2ab54003e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  _useMapDataOfSaveLoadMap: 1
 --- !u!114 &1394758979
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1474,21 +1457,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 356a594da89b0e5469af49f5b707a5af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mapData: {fileID: 11400000, guid: acd7b866b8858e54ab3c5cc82d124bc8, type: 2}
-  _gridMap: {fileID: 1394758978}
-  _gridManager: {fileID: 1394758976}
---- !u!114 &1394758980
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1394758974}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14420f441741ef44ab53942314fd4a0c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  _groundMapData: {fileID: 11400000, guid: acd7b866b8858e54ab3c5cc82d124bc8, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -2,15 +2,30 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 // Ce script gère les tuils sur la tilemap
-[RequireComponent(typeof(GridMap))]
-//[RequireComponent(typeof(Tilemap))]
+[RequireComponent(typeof(SaveLoadMap))]
 public class GridManager : Singleton<GridManager>
 {
     //////////////////////////////////
     //          Variables           // 
     //////////////////////////////////
     
-    private GridMap _grid;      // Référence à la classe GridMap qui gère la logique de la grille.
+    private GridMap _groundGridMap;      // Référence à la classe GridMap qui gère la logique de la grille.
+
+    public GridMap GroundGridMap 
+    {  
+        get { return _groundGridMap; } 
+        private set { _groundGridMap = value; }
+    }
+
+
+    private Pathfinding _pathfinding; // Système de recherche de chemin.
+
+    public Pathfinding Pathfinding
+    {
+        get { return _pathfinding; }
+        private set { _pathfinding = value; }
+    }
+
     private SaveLoadMap _saveLoadMap;  // Référence à la classe qui gère la sauvegarde et le chargement de la carte.
 
     [SerializeField]
@@ -29,13 +44,17 @@ public class GridManager : Singleton<GridManager>
 
     protected void Awake()
     {
-        _grid = GetComponent<GridMap>();
+        GroundGridMap = new GridMap();
+        Pathfinding = new Pathfinding();
         _saveLoadMap = GetComponent<SaveLoadMap>();
 
         if (_useMapDataOfSaveLoadMap)
         {
+            // Efface la grille avant de charger.
+            Clear(); 
+
             // Charge la carte à partir d'une sauvegarde.
-            _saveLoadMap.Load(_grid);
+            _saveLoadMap.Load();
 
             // Met à jour le Tilemap pour refléter l'état actuel de la grille.
             UpdateTileMap();
@@ -46,7 +65,7 @@ public class GridManager : Singleton<GridManager>
     // Met à jour la tuile à la position spécifiée dans le Tilemap en fonction de la grille.
     private void UpdateTile(int x, int y)
     {
-        int tileId = _grid.GetTile(x, y);
+        int tileId = GroundGridMap.GetTile(x, y);
 
         if (tileId == -1)
             return;
@@ -56,30 +75,21 @@ public class GridManager : Singleton<GridManager>
 
 
     //////////////////////////////////////////
-    //          Fonctions public           // 
+    //          Fonctions public            //
     //////////////////////////////////////////
 
     // Efface le Tilemap.
     public void Clear()
     {
-        if (_groundTilemap == null)
-        {
-            _groundTilemap = GetComponent<Tilemap>();
-            _groundTilemap.ClearAllTiles();
-            _groundTilemap = null;
-        }
-        else
-        {
-            _groundTilemap.ClearAllTiles();
-        }
+        _groundTilemap.ClearAllTiles();
     }
 
     // Met à jour le Tilemap en parcourant toute la grille.
     public void UpdateTileMap()
     {
-        for (int x = 0; x < _grid.Width; x++)
+        for (int x = 0; x < GroundGridMap.Width; x++)
         {
-            for (int y = 0; y < _grid.Height; y++)
+            for (int y = 0; y < GroundGridMap.Height; y++)
             {
                 UpdateTile(x, y);
             }
@@ -109,20 +119,20 @@ public class GridManager : Singleton<GridManager>
     // Vérifie si la position spécifiée dans la grille est valide.
     public bool CheckPosition(int x, int y)
     {
-        return _grid.CheckPosition(x, y);
+        return GroundGridMap.CheckPosition(x, y);
     }
 
 
     // Récupère le personnage à la position spécifiée dans la grille.
     public Character GetCharacter(int x, int y)
     {
-        return _grid.GetCharacter(x, y);
+        return GroundGridMap.GetCharacter(x, y);
     }
 
     // Définit la tuile dans la grille et met à jour le Tilemap.
     public void Set(int x, int y, int to)
     {
-        _grid.SetTile(x, y, to);
+        GroundGridMap.SetTile(x, y, to);
         UpdateTile(x, y);
     }
 
@@ -131,44 +141,22 @@ public class GridManager : Singleton<GridManager>
     {
         int[,] tilemapData = new int[0, 0];
 
-        if (_groundTilemap == null)
+        int size_x = _groundTilemap.size.x;
+        int size_y = _groundTilemap.size.y;
+        tilemapData = new int[size_x, size_y];
+
+        for (int x = 0; x < size_x; x++)
         {
-
-            _groundTilemap = GetComponent<Tilemap>();
-
-            int size_x = _groundTilemap.size.x;
-            int size_y = _groundTilemap.size.y;
-            tilemapData = new int[size_x, size_y];
-
-            for (int x = 0; x < size_x; x++)
+            for (int y = 0; y < size_y; y++)
             {
-                for (int y = 0; y < size_y; y++)
-                {
-                    TileBase tileBase = _groundTilemap.GetTile(new Vector3Int(x, y, 0));
-                    int indexTile = _tileSet.tiles.FindIndex(t => t == tileBase);
-                    tilemapData[x, y] = indexTile;
-                }
-            }
-
-            _groundTilemap = null;
-        }
-        else
-        {
-            int size_x = _groundTilemap.size.x;
-            int size_y = _groundTilemap.size.y;
-            tilemapData = new int[size_x, size_y];
-
-            for (int x = 0; x < size_x; x++)
-            {
-                for (int y = 0; y < size_y; y++)
-                {
-                    TileBase tileBase = _groundTilemap.GetTile(new Vector3Int(x, y, 0));
-                    int indexTile = _tileSet.tiles.FindIndex(t => t == tileBase);
-                    tilemapData[x, y] = indexTile;
-                }
+                TileBase tileBase = _groundTilemap.GetTile(new Vector3Int(x, y, 0));
+                int indexTile = _tileSet.tiles.FindIndex(t => t == tileBase);
+                tilemapData[x, y] = indexTile;
             }
         }
 
         return tilemapData;
     }
+
+
 }

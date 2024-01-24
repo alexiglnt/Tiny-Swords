@@ -19,22 +19,17 @@ public class CharacterControl : MonoBehaviour
     [SerializeField]
     private TileBase _highlightTile; // Tuile de surbrillance.
 
-    [SerializeField]
-    private GridManager _gridManager; // Gestionnaire de la grille.
-
-    private Pathfinding _pathfinding; // Système de recherche de chemin.
     private Character _selectedCharacter; // Personnage actuellement sélectionné.
 
     private Controls _controls; // System d'input
 
 
     //////////////////////////////////
-    //          Fonctions           // 
+    //          Fonctions           //
     //////////////////////////////////
     
     private void Awake()
     {
-        _pathfinding = _gridManager.GetComponent<Pathfinding>(); // Récupération du composant Pathfinding de la Tilemap cible.
         _controls = new Controls();
     }
 
@@ -52,13 +47,6 @@ public class CharacterControl : MonoBehaviour
         _controls.Gameplay.SelectCell.performed -= SelectCell;
     }
 
-    //private void Update()
-    //{
-    //    SelectCell(); // Gestion de l'entrée de la souris.
-    //}
-
-
-
     private void SelectCell(InputAction.CallbackContext value)
     {
         Vector3 worldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition); // Conversion de la position de la souris en coordonnées mondiales.
@@ -68,16 +56,16 @@ public class CharacterControl : MonoBehaviour
         {
             _highlightTilemap.ClearAllTiles(); // Efface les tuiles de surbrillance.
 
-            if (!_gridManager.CheckPosition(clickPosition.x, clickPosition.y))
+            if (!GridManager.Instance.CheckPosition(clickPosition.x, clickPosition.y))
                 return;
 
-            _selectedCharacter = _gridManager.GetCharacter(clickPosition.x, clickPosition.y); // Récupère le personnage à la position cliquée.
+            _selectedCharacter = GridManager.Instance.GetCharacter(clickPosition.x, clickPosition.y); // Récupère le personnage à la position cliquée.
 
             if (_selectedCharacter != null)
             {
                 List<PathNode> toHighlight = new List<PathNode>();
-                _pathfinding.Clear(); // Efface les données de chemin existantes.
-                _pathfinding.CalculateWalkableTerrain(
+                GridManager.Instance.Pathfinding.Clear(); // Efface les données de chemin existantes.
+                GridManager.Instance.Pathfinding.CalculateWalkableTerrain(
                     clickPosition.x,
                     clickPosition.y,
                     _selectedCharacter.MoveDistance,
@@ -94,7 +82,7 @@ public class CharacterControl : MonoBehaviour
         {
             _highlightTilemap.ClearAllTiles(); // Efface les tuiles de surbrillance.
 
-            List<PathNode> path = _pathfinding.TrackBackPath(_selectedCharacter, clickPosition.x, clickPosition.y); // Récupère le chemin jusqu'à la position cliquée.
+            List<PathNode> path = GridManager.Instance.Pathfinding.TrackBackPath(_selectedCharacter, clickPosition.x, clickPosition.y); // Récupère le chemin jusqu'à la position cliquée.
 
             if (path != null)
             {
@@ -118,6 +106,6 @@ public class CharacterControl : MonoBehaviour
     private void Deselect()
     {
         _selectedCharacter = null;
-        _pathfinding.Clear(); // Efface les données de chemin après le déplacement.
+        GridManager.Instance.Pathfinding.Clear(); // Efface les données de chemin après le déplacement.
     }
 }

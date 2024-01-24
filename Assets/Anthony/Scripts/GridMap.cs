@@ -8,7 +8,7 @@ public class Node
 }
 
 // Classe principale qui représente la grid avec ce qu'elle contienne
-public class GridMap : MonoBehaviour
+public class GridMap
 {
     //////////////////////////////////
     //          Variables           // 
