@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &11604962 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4284874980893243099, guid: cf8b9fa79f51286409c6061016c5cb57, type: 3}
+  m_PrefabInstance: {fileID: 4008173717818024447}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &16878078
 GameObject:
   m_ObjectHideFlags: 0
@@ -889,6 +894,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 017bad789d7731340a72b19efd461281, type: 3}
+--- !u!1 &216114652 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6754455677090717037, guid: 7a86799f178e52441a523e844dd2b925, type: 3}
+  m_PrefabInstance: {fileID: 4570437176556131709}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &238526956 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7771282057372582216, guid: 08b4344f4ea9d1843b40b55693c81ac5, type: 3}
@@ -1235,6 +1245,11 @@ Transform:
 Transform:
   m_CorrespondingSourceObject: {fileID: 382598835589724180, guid: ea7003b9a6c34ce4d9026d1206145c3f, type: 3}
   m_PrefabInstance: {fileID: 1455889923997866730}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &456176995 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7129214534261447112, guid: 8566dd927cb4966449273ab9cbf1bd92, type: 3}
+  m_PrefabInstance: {fileID: 4398709767049875363}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &492122076
 GameObject:
@@ -2888,9 +2903,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 356a594da89b0e5469af49f5b707a5af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mapData: {fileID: 11400000, guid: 0a366452b7ea832418b220111cac39be, type: 2}
-  _gridMap: {fileID: 588921485}
-  _gridManager: {fileID: 588921484}
+  _groundMapData: {fileID: 0}
 --- !u!114 &588921483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4246,6 +4259,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4977056523170053888, guid: e8c771c724579fc4e8c00aa55873f059, type: 3}
   m_PrefabInstance: {fileID: 631842013395067848}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &954494920 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1711699957530098021, guid: 03058fd9e2b7273489f026d516a955df, type: 3}
+  m_PrefabInstance: {fileID: 5646440965181960023}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &968960554
 GameObject:
   m_ObjectHideFlags: 0
@@ -5085,7 +5103,7 @@ Tilemap:
       - {fileID: 1617045905, guid: 969d8e0103544aa4db8b51e1f170b504, type: 3}
       - {fileID: 1592047405, guid: 969d8e0103544aa4db8b51e1f170b504, type: 3}
       - {fileID: -952298850, guid: 969d8e0103544aa4db8b51e1f170b504, type: 3}
-      m_AnimationSpeed: 10.000001
+      m_AnimationSpeed: 10
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -10, y: -7, z: 0}
@@ -5220,7 +5238,7 @@ Tilemap:
       - {fileID: 1617045905, guid: 969d8e0103544aa4db8b51e1f170b504, type: 3}
       - {fileID: 1592047405, guid: 969d8e0103544aa4db8b51e1f170b504, type: 3}
       - {fileID: -952298850, guid: 969d8e0103544aa4db8b51e1f170b504, type: 3}
-      m_AnimationSpeed: 10
+      m_AnimationSpeed: 10.000001
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -9, y: -6, z: 0}
@@ -5250,7 +5268,7 @@ Tilemap:
       - {fileID: 1617045905, guid: 969d8e0103544aa4db8b51e1f170b504, type: 3}
       - {fileID: 1592047405, guid: 969d8e0103544aa4db8b51e1f170b504, type: 3}
       - {fileID: -952298850, guid: 969d8e0103544aa4db8b51e1f170b504, type: 3}
-      m_AnimationSpeed: 10
+      m_AnimationSpeed: 10.000001
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -7, y: -6, z: 0}
@@ -6117,7 +6135,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1120070987
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7316,6 +7334,68 @@ Transform:
   - {fileID: 5796140482813659724}
   m_Father: {fileID: 816594709}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1225324406
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1225324408}
+  - component: {fileID: 1225324407}
+  m_Layer: 0
+  m_Name: MapGeneratorOptimized
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1225324407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1225324406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a2329fb2bf48ac458254b99f69ccea2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grassTilemap: {fileID: 587387011}
+  stoneTilemap: {fileID: 1330357904}
+  grassTile: {fileID: 11400000, guid: 724894144f6cc2844a5a68956e194a5b, type: 2}
+  stoneTile: {fileID: 11400000, guid: 453313eeb72cf9746b43bd9b21243301, type: 2}
+  trees:
+  - {fileID: 1187074807}
+  rocks:
+  - {fileID: 11604962}
+  - {fileID: 456176995}
+  - {fileID: 1566556265}
+  bushes:
+  - {fileID: 216114652}
+  - {fileID: 954494920}
+  - {fileID: 1435658102}
+  waterTilemap: {fileID: 1146320817}
+  foamTilemap: {fileID: 980075021}
+  waterTile: {fileID: 11400000, guid: dedd5512d44f3d04daf16a02f88143f6, type: 2}
+  foamTile: {fileID: 11400000, guid: 7031b5f779517d54983e2bc996c467ca, type: 2}
+--- !u!4 &1225324408
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1225324406}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -6.6231036, y: -3.22636, z: -5.6481824}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1226087084
 GameObject:
   m_ObjectHideFlags: 0
@@ -8205,6 +8285,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1432565841}
   m_CullTransparentMesh: 1
+--- !u!1 &1435658102 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2967296772136697786, guid: 2dffcc441a8a97d4c92abc66298128e8, type: 3}
+  m_PrefabInstance: {fileID: 7903862597070821817}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1459522938 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3900122401561553970, guid: 56f53a2bac165ce4b8fc2ec5ec9823a5, type: 3}
@@ -8449,6 +8534,11 @@ MonoBehaviour:
   m_FirstSelected: {fileID: 0}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
+--- !u!1 &1566556265 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8753390176376090271, guid: 378a8a7334c90d84a9a7d46b936602e2, type: 3}
+  m_PrefabInstance: {fileID: 2862314266227391393}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1600570414
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13982,5 +14072,6 @@ SceneRoots:
   - {fileID: 641797615}
   - {fileID: 180883541}
   - {fileID: 1120070988}
+  - {fileID: 1225324408}
   - {fileID: 1847771493}
   - {fileID: 588921486}
