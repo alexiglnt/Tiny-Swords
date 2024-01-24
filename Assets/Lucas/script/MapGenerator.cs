@@ -141,7 +141,7 @@ public class MapGenerator : MonoBehaviour
 
 
         GridManager.Instance.GetComponent<SaveLoadMap>().Save();
-        GridManager.Instance.GetComponent<SaveLoadMap>().LoadGridMap();
+        GridManager.Instance.GetComponent<SaveLoadMap>().Load();
 
 
     }

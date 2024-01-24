@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 // Classe responsable de la sauvegarde et du chargement de la carte.
@@ -8,14 +9,7 @@ public class SaveLoadMap : MonoBehaviour
     //////////////////////////////////
 
     [SerializeField]
-    private MapData _mapData;   // Les données de la carte à sauvegarder ou charger.
-
-    [SerializeField]
-    private GridMap _gridMap;   // La grille à mettre à jour lors du chargement.
-
-    [SerializeField]
-    private GridManager _gridManager;   // Le gestionnaire de grille pour effectuer des opérations liées à la grille.
-
+    private MapData _groundMapData;   // Les données de la carte à sauvegarder ou charger.
 
     //////////////////////////////////
     //          Fonctions           // 
@@ -24,40 +18,74 @@ public class SaveLoadMap : MonoBehaviour
     // Sauvegarde la carte en lisant les données de la grille via le gestionnaire de grille.
     public void Save()
     {
-        int[,] map = _gridManager.ReadTileMap();  // Lit les données de la grille.
-        _mapData.Save(map);  // Sauvegarde les données de la carte.
+        int[,] map = GridManager.Instance.ReadTileMap();  // Lit les données de la grille.
+
+        _groundMapData.width = map.GetLength(0);
+        _groundMapData.height = map.GetLength(1);
+
+        _groundMapData.map = new List<int>();
+
+        for (int x = 0; x < _groundMapData.width; x++)
+        {
+            for (int y = 0; y < _groundMapData.height; y++)
+            {
+                _groundMapData.map.Add(map[x, y]); // Ajoute les données du tableau à la liste.
+            }
+        }
+#if UNITY_EDITOR
+        UnityEditor.EditorUtility.SetDirty(_groundMapData); // Marque l'objet scriptable comme modifié pour l'éditeur Unity.
+#endif
+    }
+
+    // Sauvegarde les données de la grille dans l'objet scriptable.
+    public void Save(GridMap gridMap)
+    {
+        _groundMapData.height = gridMap.Height;
+        _groundMapData.width = gridMap.Width;
+
+        _groundMapData.map = new List<int>();
+        for (int x = 0; x < _groundMapData.width; x++)
+        {
+            for (int y = 0; y < _groundMapData.height; y++)
+            {
+                _groundMapData.map.Add(gridMap.GetTile(x, y)); // Ajoute les données de la grille à la liste.
+            }
+        }
     }
 
     // Charge la carte en lisant les données de la carte et en les appliquant à la grille via le gestionnaire de grille.
-    public void Load()
+    public void LoadTilemap()
     {
-        _gridManager.Clear();  // Efface la grille avant de charger.
+        GridManager.Instance.Clear();  // Efface la grille avant de charger.
 
-        int width = _mapData.width;  // Largeur de la carte à charger.
-        int height = _mapData.height;  // Hauteur de la carte à charger.
+        int width = _groundMapData.width;  // Largeur de la carte à charger.
+        int height = _groundMapData.height;  // Hauteur de la carte à charger.
 
         int i = 0;
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
             {
-                _gridManager.SetTile(x, y, _mapData.map[i]);  // Applique les données de la carte à la grille.
+                GridManager.Instance.SetTile(x, y, _groundMapData.map[i]);  // Applique les données de la carte à la grille.
                 i += 1;
             }
         }
     }
 
-    // Charge la carte en lisant les données de la grille et en les appliquant à la grille spécifiée.
-    public void Load(GridMap grid)
+    // Charge la carte en lisant les données de la grille et en les appliquant à la grille.
+    public void Load()
     {
-        _gridManager.Clear();  // Efface la grille avant de charger.
-        _mapData.Load(grid);  // Charge les données de la carte à partir de la grille spécifiée.
-        _gridManager.UpdateTileMap();  // Met à jour le Tilemap pour refléter l'état actuel de la grille.
-    }
+        GridManager.Instance.GroundGridMap.Init(_groundMapData.width, _groundMapData.height); // Initialise la grille avec les dimensions spécifiées.
 
-    // Charge selement la GridMap en lisant les données de la grille et en les appliquant à la grille .
-    public void LoadGridMap()
-    {
-        _mapData.Load(_gridMap);  // Charge les données de la carte à partir de la grille spécifiée.
+        for (int x = 0; x < _groundMapData.width; x++)
+        {
+            for (int y = 0; y < _groundMapData.height; y++)
+            {
+                GridManager.Instance.GroundGridMap.SetTile(x, y, _groundMapData.Get(x, y)); // Remplit la grille avec les données de carte.
+            }
+        }
+
+
+        GridManager.Instance.Pathfinding.UpdateGrid();
     }
 }

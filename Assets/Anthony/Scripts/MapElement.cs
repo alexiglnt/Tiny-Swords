@@ -16,16 +16,21 @@ public class MapElement : MonoBehaviour
     //////////////////////////////////////////
     //          Fonctions private           //
     //////////////////////////////////////////
-    
-    private void Start()
+
+    private void OnEnable()
     {
         SetGrid(); // Initialise la référence à la grille.
         PlaceObjectOnGrid(); // Place l'objet sur la grille lors du démarrage.
     }
 
+    private void OnDisable()
+    {
+        RemoveObjectFromGrid();
+    }
+
     private void SetGrid()
     {
-        _gridMap = GridManager.Instance.GetComponent<GridMap>(); // Récupère la référence à la grille depuis le parent de l'objet.
+        _gridMap = GridManager.Instance.GroundGridMap; // Récupère la référence à la grille depuis le parent de l'objet.
     }
 
     // Met à jour la position dans la grille et place l'objet à la nouvelle position.

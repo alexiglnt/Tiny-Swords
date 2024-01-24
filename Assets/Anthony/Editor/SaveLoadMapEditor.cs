@@ -15,7 +15,7 @@ public class SaveLoadMapEditor : Editor
         if(GUILayout.Button("Load"))
         {
             Debug.Log("Loading tile map");
-            saveLoadMap.Load();
+            saveLoadMap.LoadTilemap();
         }
 
 
