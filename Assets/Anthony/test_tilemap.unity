@@ -2369,6 +2369,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f365206d32e2bf45af7536c3dd48139, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &833159607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 833159601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8aaa838d1f311734a844b133eeca8e91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mapHeight: 50
 --- !u!1 &878560878
 GameObject:
   m_ObjectHideFlags: 0
@@ -3325,6 +3338,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2615726425806438096, guid: a8248d7ba72a26842b6d25224e084ac8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 833159602}
+    - targetCorrespondingSourceObject: {fileID: 2615726425806438096, guid: a8248d7ba72a26842b6d25224e084ac8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 833159607}
   m_SourcePrefab: {fileID: 100100000, guid: a8248d7ba72a26842b6d25224e084ac8, type: 3}
 --- !u!1 &1089670707
 GameObject:

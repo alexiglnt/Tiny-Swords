@@ -82,17 +82,17 @@ public class CharacterControl : MonoBehaviour
         {
             _highlightTilemap.ClearAllTiles(); // Efface les tuiles de surbrillance.
 
-            List<PathNode> path = GridManager.Instance.Pathfinding.TrackBackPath(_selectedCharacter, clickPosition.x, clickPosition.y); // Récupère le chemin jusqu'à la position cliquée.
+            List<PathNode> path = GridManager.Instance.Pathfinding.TrackBackPath(clickPosition.x, clickPosition.y); // Récupère le chemin jusqu'à la position cliquée.
 
             if (path != null)
             {
                 if (path.Count > 0)
                 {
-                    for (int i = 0; i < path.Count; i++)
-                    {
-                        _highlightTilemap.SetTile(new Vector3Int(path[i].xPos, path[i].yPos, 0), _highlightTile); // Met en surbrillance les cases du chemin.
-                    }
-                    _selectedCharacter.GetComponent<MapElement>().MoveCharacter(path[0].xPos, path[0].yPos); // Déplace le personnage à la première case du chemin.
+                    //for (int i = 0; i < path.Count; i++)
+                    //{
+                    //    _highlightTilemap.SetTile(new Vector3Int(path[i].xPos, path[i].yPos, 0), _highlightTile); // Met en surbrillance les cases du chemin.
+                    //}
+                    _selectedCharacter.GetComponent<MapElement>().MoveCharacter(path[0].xPos, path[0].yPos, path); // Déplace le personnage à la première case du chemin.
                 }
 
                 Deselect(); // Désélectionne le personnage après le déplacement.
