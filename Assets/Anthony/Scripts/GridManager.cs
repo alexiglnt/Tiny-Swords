@@ -9,14 +9,13 @@ public class GridManager : Singleton<GridManager>
     //          Variables           // 
     //////////////////////////////////
     
-    private GridMap _groundGridMap;      // Référence à la classe GridMap qui gère la logique de la grille.
+    private GridMap _gridMap;      // Référence à la classe GridMap qui gère la logique de la grille pour le déplacement.
 
-    public GridMap GroundGridMap 
+    public GridMap GridMap 
     {  
-        get { return _groundGridMap; } 
-        private set { _groundGridMap = value; }
+        get { return _gridMap; } 
+        private set { _gridMap = value; }
     }
-
 
     private Pathfinding _pathfinding; // Système de recherche de chemin.
 
@@ -32,6 +31,9 @@ public class GridManager : Singleton<GridManager>
     private Tilemap _groundTilemap;  // Référence au Tilemap Unity pour les graphiques de la grille.
 
     [SerializeField]
+    private Tilemap _obstacleTilemap;  // Référence au Tilemap Unity pour les obstacle de la grille.
+
+    [SerializeField]
     private TileSet _tileSet;   // Ensemble de tuiles utilisé pour mapper les indices de tuiles aux tuiles réelles.
 
     [SerializeField]
@@ -44,7 +46,7 @@ public class GridManager : Singleton<GridManager>
 
     protected void Awake()
     {
-        GroundGridMap = new GridMap();
+        GridMap = new GridMap();
         Pathfinding = new Pathfinding();
         _saveLoadMap = GetComponent<SaveLoadMap>();
 
@@ -65,12 +67,33 @@ public class GridManager : Singleton<GridManager>
     // Met à jour la tuile à la position spécifiée dans le Tilemap en fonction de la grille.
     private void UpdateTile(int x, int y)
     {
-        int tileId = GroundGridMap.GetTile(x, y);
+        int tileId = GridMap.GetTile(x, y);
 
         if (tileId == -1)
             return;
 
         _groundTilemap.SetTile(new Vector3Int(x, y, 0), _tileSet.tiles[tileId]);
+    }
+
+    private int[,] ReadTileMap(Tilemap tilemap)
+    {
+        int[,] tilemapData = new int[0, 0];
+
+        int size_x = tilemap.size.x;
+        int size_y = tilemap.size.y;
+        tilemapData = new int[size_x, size_y];
+
+        for (int x = 0; x < size_x; x++)
+        {
+            for (int y = 0; y < size_y; y++)
+            {
+                TileBase tileBase = tilemap.GetTile(new Vector3Int(x, y, 0));
+                int indexTile = _tileSet.tiles.FindIndex(t => t == tileBase);
+                tilemapData[x, y] = indexTile;
+            }
+        }
+
+        return tilemapData;
     }
 
 
@@ -82,14 +105,15 @@ public class GridManager : Singleton<GridManager>
     public void Clear()
     {
         _groundTilemap.ClearAllTiles();
+        _obstacleTilemap.ClearAllTiles();
     }
 
     // Met à jour le Tilemap en parcourant toute la grille.
     public void UpdateTileMap()
     {
-        for (int x = 0; x < GroundGridMap.Width; x++)
+        for (int x = 0; x < GridMap.Width; x++)
         {
-            for (int y = 0; y < GroundGridMap.Height; y++)
+            for (int y = 0; y < GridMap.Height; y++)
             {
                 UpdateTile(x, y);
             }
@@ -119,44 +143,31 @@ public class GridManager : Singleton<GridManager>
     // Vérifie si la position spécifiée dans la grille est valide.
     public bool CheckPosition(int x, int y)
     {
-        return GroundGridMap.CheckPosition(x, y);
+        return GridMap.CheckPosition(x, y);
     }
 
 
     // Récupère le personnage à la position spécifiée dans la grille.
     public Character GetCharacter(int x, int y)
     {
-        return GroundGridMap.GetCharacter(x, y);
+        return GridMap.GetCharacter(x, y);
     }
 
     // Définit la tuile dans la grille et met à jour le Tilemap.
     public void Set(int x, int y, int to)
     {
-        GroundGridMap.SetTile(x, y, to);
+        GridMap.SetTile(x, y, to);
         UpdateTile(x, y);
     }
 
     // Lit les données du Tilemap et retourne une matrice d'indices de tuiles.
-    public int[,] ReadTileMap()
+    public int[,] ReadGroundTileMap()
     {
-        int[,] tilemapData = new int[0, 0];
-
-        int size_x = _groundTilemap.size.x;
-        int size_y = _groundTilemap.size.y;
-        tilemapData = new int[size_x, size_y];
-
-        for (int x = 0; x < size_x; x++)
-        {
-            for (int y = 0; y < size_y; y++)
-            {
-                TileBase tileBase = _groundTilemap.GetTile(new Vector3Int(x, y, 0));
-                int indexTile = _tileSet.tiles.FindIndex(t => t == tileBase);
-                tilemapData[x, y] = indexTile;
-            }
-        }
-
-        return tilemapData;
+        return ReadTileMap(_groundTilemap);
     }
 
-
+    public int[,] ReadObstacleTileMap()
+    {
+        return ReadTileMap(_obstacleTilemap);
+    }
 }

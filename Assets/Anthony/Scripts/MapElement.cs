@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public enum Element { Character, Tree}
@@ -44,7 +43,7 @@ public class MapElement : MonoBehaviour
 
     private void SetGrid()
     {
-        _gridMap = GridManager.Instance.GroundGridMap; // Récupère la référence à la grille depuis le parent de l'objet.
+        _gridMap = GridManager.Instance.GridMap; // Récupère la référence à la grille depuis le parent de l'objet.
     }
 
     // Met à jour la position dans la grille et place l'objet à la nouvelle position.

@@ -9,7 +9,10 @@ public class SaveLoadMap : MonoBehaviour
     //////////////////////////////////
 
     [SerializeField]
-    private MapData _groundMapData;   // Les données de la carte à sauvegarder ou charger.
+    private MapData _groundMapData;   // Les données de la carte du sol à sauvegarder ou charger.
+
+    [SerializeField]
+    private MapData _obstacleMapData;   // Les données de la carte des obstacles à sauvegarder ou charger.
 
     //////////////////////////////////
     //          Fonctions           // 
@@ -18,18 +21,23 @@ public class SaveLoadMap : MonoBehaviour
     // Sauvegarde la carte en lisant les données de la grille via le gestionnaire de grille.
     public void Save()
     {
-        int[,] map = GridManager.Instance.ReadTileMap();  // Lit les données de la grille.
+        int[,] groundMap = GridManager.Instance.ReadGroundTileMap();  // Lit les données de la grille du sol.
+        int[,] obstacleMap = GridManager.Instance.ReadObstacleTileMap();  // Lit les données de la grille des obstacle.
 
-        _groundMapData.width = map.GetLength(0);
-        _groundMapData.height = map.GetLength(1);
-
+        _groundMapData.width = groundMap.GetLength(0);
+        _groundMapData.height = groundMap.GetLength(1);
         _groundMapData.map = new List<int>();
+
+        _obstacleMapData.width = obstacleMap.GetLength(0);
+        _obstacleMapData.height = obstacleMap.GetLength(1);
+        _obstacleMapData.map = new List<int>();
 
         for (int x = 0; x < _groundMapData.width; x++)
         {
             for (int y = 0; y < _groundMapData.height; y++)
             {
-                _groundMapData.map.Add(map[x, y]); // Ajoute les données du tableau à la liste.
+                _groundMapData.map.Add(groundMap[x, y]); // Ajoute les données du tableau à la liste du sol.
+                _obstacleMapData.map.Add(obstacleMap[x, y]); // Ajoute les données du tableau à la liste des obstacles.
             }
         }
 #if UNITY_EDITOR
@@ -75,13 +83,13 @@ public class SaveLoadMap : MonoBehaviour
     // Charge la carte en lisant les données de la grille et en les appliquant à la grille.
     public void Load()
     {
-        GridManager.Instance.GroundGridMap.Init(_groundMapData.width, _groundMapData.height); // Initialise la grille avec les dimensions spécifiées.
+        GridManager.Instance.GridMap.Init(_groundMapData.width, _groundMapData.height); // Initialise la grille avec les dimensions spécifiées.
 
         for (int x = 0; x < _groundMapData.width; x++)
         {
             for (int y = 0; y < _groundMapData.height; y++)
             {
-                GridManager.Instance.GroundGridMap.SetTile(x, y, _groundMapData.Get(x, y)); // Remplit la grille avec les données de carte.
+                GridManager.Instance.GridMap.SetTile(x, y, _groundMapData.Get(x, y)); // Remplit la grille avec les données de carte.
             }
         }
 

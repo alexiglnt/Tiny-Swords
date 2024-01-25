@@ -2688,8 +2688,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 254a30509222a4046b2dcfce24a7cee0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveDistance: 5
-  _name: Tom
+  _stats: {fileID: 11400000, guid: 062260bf588bc5145bb8ac786ac4a89c, type: 2}
 --- !u!114 &833159603
 MonoBehaviour:
   m_ObjectHideFlags: 0

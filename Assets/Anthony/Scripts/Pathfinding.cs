@@ -64,7 +64,7 @@ public class Pathfinding
     {
         if (_gridMap == null)
         {
-            _gridMap = GridManager.Instance.GroundGridMap;
+            _gridMap = GridManager.Instance.GridMap;
         }
 
         UpdateGrid();
