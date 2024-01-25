@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e21f77a4b309310479267f7b1bddcae6, type: 3}
+  m_Name: Warrior
+  m_EditorClassIdentifier: 
+  characterName: Guerrier bleu
+  description: "Le guerrier, habile et puissant sur le champ de bataille, excelle
+    dans l'art du combat rapproch\xE9, maniant son \xE9p\xE9e avec une ma\xEEtrise
+    redoutable pour an\xE9antir ses adversaires."
+  maxHealth: 5
+  maxRange: 1
+  maxMove: 4
+  attack: 3

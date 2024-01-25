@@ -116,6 +116,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""AttackMode"",
+                    ""type"": ""Button"",
+                    ""id"": ""c25d8373-a92d-4631-bb87-572606cf21c5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -371,6 +380,17 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""SelectPawn"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""30cd86cb-d3cd-44e3-8e9b-067b440612d9"",
+                    ""path"": ""<Keyboard>/#(A)"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AttackMode"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -389,6 +409,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Gameplay_Drag = m_Gameplay.FindAction("Drag", throwIfNotFound: true);
         m_Gameplay_SelectCell = m_Gameplay.FindAction("SelectCell", throwIfNotFound: true);
         m_Gameplay_SelectPawn = m_Gameplay.FindAction("SelectPawn", throwIfNotFound: true);
+        m_Gameplay_AttackMode = m_Gameplay.FindAction("AttackMode", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -460,6 +481,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Drag;
     private readonly InputAction m_Gameplay_SelectCell;
     private readonly InputAction m_Gameplay_SelectPawn;
+    private readonly InputAction m_Gameplay_AttackMode;
     public struct GameplayActions
     {
         private @Controls m_Wrapper;
@@ -474,6 +496,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @Drag => m_Wrapper.m_Gameplay_Drag;
         public InputAction @SelectCell => m_Wrapper.m_Gameplay_SelectCell;
         public InputAction @SelectPawn => m_Wrapper.m_Gameplay_SelectPawn;
+        public InputAction @AttackMode => m_Wrapper.m_Gameplay_AttackMode;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -513,6 +536,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @SelectPawn.started += instance.OnSelectPawn;
             @SelectPawn.performed += instance.OnSelectPawn;
             @SelectPawn.canceled += instance.OnSelectPawn;
+            @AttackMode.started += instance.OnAttackMode;
+            @AttackMode.performed += instance.OnAttackMode;
+            @AttackMode.canceled += instance.OnAttackMode;
         }
 
         private void UnregisterCallbacks(IGameplayActions instance)
@@ -547,6 +573,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @SelectPawn.started -= instance.OnSelectPawn;
             @SelectPawn.performed -= instance.OnSelectPawn;
             @SelectPawn.canceled -= instance.OnSelectPawn;
+            @AttackMode.started -= instance.OnAttackMode;
+            @AttackMode.performed -= instance.OnAttackMode;
+            @AttackMode.canceled -= instance.OnAttackMode;
         }
 
         public void RemoveCallbacks(IGameplayActions instance)
@@ -576,5 +605,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnDrag(InputAction.CallbackContext context);
         void OnSelectCell(InputAction.CallbackContext context);
         void OnSelectPawn(InputAction.CallbackContext context);
+        void OnAttackMode(InputAction.CallbackContext context);
     }
 }
