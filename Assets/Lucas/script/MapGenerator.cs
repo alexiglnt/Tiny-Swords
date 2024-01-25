@@ -7,8 +7,10 @@ public class MapGenerator : MonoBehaviour
     public Tilemap waterTilemap;
     public Tilemap foamTilemap;
     public Tilemap grassTilemap;
+    public Tilemap mountailGrassTilemap;
     public Tilemap stoneTilemap;
 
+    public Tile Grass;
     public RuleTile waterRuleTile;
     public RuleTile grassRuleTile;
     public RuleTile stoneRuleTile;
@@ -77,6 +79,7 @@ public class MapGenerator : MonoBehaviour
 
     private void Start()
     {
+        StartGeneration();
 
         // Generate random offsets for map
         offsetX = Random.Range(0f, 9999f);
@@ -109,9 +112,34 @@ public class MapGenerator : MonoBehaviour
         GenerateMap();
     }
 
+    void ClearTilemap(Tilemap tilemap)
+    {
+        tilemap.ClearAllTiles(); // This will clear all tiles in the tilemap
+    }
+
+    // Call this function before you start generating your new tile map
+    void ResetTilemaps(Tilemap[] tilemaps)
+    {
+        foreach (Tilemap tilemap in tilemaps)
+        {
+            ClearTilemap(tilemap);
+        }
+    }
+
+    void StartGeneration()
+    {
+        Tilemap[] tilemapsToReset = new Tilemap[] { stoneTilemap, grassTilemap, mountailGrassTilemap, waterTilemap, foamTilemap };
+        ResetTilemaps(tilemapsToReset);
+
+        // Your generation code here
+    }
+
+
+
 
     void GenerateMap()
     {
+
         // Generate base tiles
         for (int x = 0; x < mapWidth; x++)
         {
@@ -125,6 +153,7 @@ public class MapGenerator : MonoBehaviour
         AddFoamToShore();
         EnforceStoneRule();
         AddGrassUnderStoneBorders();
+        AddFoamAtBorders(waterTilemap, foamTilemap, foamRuleTile);
 
         // Place rocks and trees last
         PlaceAnimatedRocks();
@@ -244,7 +273,7 @@ public class MapGenerator : MonoBehaviour
                 if (IsStoneNextToGrass(x, y))
                 {
                     // Set grass tile at the same position as the stone tile
-                    grassTilemap.SetTile(new Vector3Int(x, y, 0), grassRuleTile);
+                    mountailGrassTilemap.SetTile(new Vector3Int(x, y, 0), Grass);
                 }
             }
         }
@@ -253,7 +282,6 @@ public class MapGenerator : MonoBehaviour
     bool IsStoneNextToGrass(int x, int y)
     {
         TileBase currentTile = stoneTilemap.GetTile(new Vector3Int(x, y, 0));
-        // Check adjacent tiles for grass
         Vector3Int[] adjacentDirections = new Vector3Int[]
         {
         new Vector3Int(0, 1, 0),  // top
@@ -262,19 +290,37 @@ public class MapGenerator : MonoBehaviour
         new Vector3Int(1, 0, 0)   // right
         };
 
+        bool isNextToGrass = false;
+
         if (currentTile == stoneRuleTile)
         {
             foreach (Vector3Int dir in adjacentDirections)
             {
-                Vector3Int neighborPosition = new Vector3Int(x + dir.x, y + dir.y, 0);
-                if (grassTilemap.HasTile(neighborPosition))
+                Vector3Int grassPosition = new Vector3Int(x + dir.x, y + dir.y, 0);
+                // Check if there is grass on this adjacent tile
+                if (grassTilemap.HasTile(grassPosition))
                 {
-                    return true;
+                    isNextToGrass = true;
+                    // Check surrounding tiles of the grass tile for additional grass
+                    foreach (Vector3Int adjacentDir in adjacentDirections)
+                    {
+                        Vector3Int adjacentGrassPosition = grassPosition + adjacentDir;
+                        // Make sure we're not checking the original stone tile position
+                        if (!stoneTilemap.HasTile(adjacentGrassPosition) && grassTilemap.HasTile(adjacentGrassPosition))
+                        {
+                            // Set mountain grass tile at the position of the initial adjacent grass tile
+                            mountailGrassTilemap.SetTile(grassPosition, Grass);
+                            break;
+                        }
+                    }
                 }
             }
         }
-        return false;
+
+        return isNextToGrass;
     }
+
+
 
     void PlaceAnimatedRocks()
     {
@@ -361,7 +407,7 @@ public class MapGenerator : MonoBehaviour
 
     void PlaceTree(int x, int y)
     {
-        Vector3 treePosition = new Vector3(x + Random.Range(-0.5f, 0.5f), y + Random.Range(-0.5f, 0.5f), 0);
+        Vector3 treePosition = new Vector3(x + Random.Range(-0.125f, 0.125f), y + Random.Range(-0.125f, 0.125f), 0);
         GameObject tree = Instantiate(treePrefab, treePosition, Quaternion.identity);
         float scale = Random.Range(minTreeScale, maxTreeScale);
 
@@ -568,5 +614,48 @@ public class MapGenerator : MonoBehaviour
         // The position is valid if it's in bounds and not occupied by stone or water
         return true;
     }
+
+    void AddFoamAtBorders(Tilemap waterTilemap, Tilemap foamTilemap, TileBase foamTile)
+    {
+        BoundsInt bounds = waterTilemap.cellBounds;
+        TileBase borderTile;
+
+        // Parcours des bordures horizontales (haut et bas)
+        for (int x = bounds.xMin; x < bounds.xMax; x++)
+        {
+            // Haut
+            borderTile = waterTilemap.GetTile(new Vector3Int(x, bounds.yMax - 1, 0));
+            if (borderTile != waterRuleTile)
+            {
+                foamTilemap.SetTile(new Vector3Int(x, bounds.yMax - 1, 0), foamTile);
+            }
+
+            // Bas
+            borderTile = waterTilemap.GetTile(new Vector3Int(x, bounds.yMin, 0));
+            if (borderTile != waterRuleTile)
+            {
+                foamTilemap.SetTile(new Vector3Int(x, bounds.yMin, 0), foamTile);
+            }
+        }
+
+        // Parcours des bordures verticales (gauche et droite)
+        for (int y = bounds.yMin; y < bounds.yMax; y++)
+        {
+            // Gauche
+            borderTile = waterTilemap.GetTile(new Vector3Int(bounds.xMin, y, 0));
+            if (borderTile != waterRuleTile)
+            {
+                foamTilemap.SetTile(new Vector3Int(bounds.xMin, y, 0), foamTile);
+            }
+
+            // Droite
+            borderTile = waterTilemap.GetTile(new Vector3Int(bounds.xMax - 1, y, 0));
+            if (borderTile != waterRuleTile)
+            {
+                foamTilemap.SetTile(new Vector3Int(bounds.xMax - 1, y, 0), foamTile);
+            }
+        }
+    }
+
 
 }

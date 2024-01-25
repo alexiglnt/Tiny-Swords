@@ -10,9 +10,11 @@ public class PawnController : MonoBehaviour
     private Controls controls;
     private TreeController currentTargetTree;
     private SheepController currentTargetSheep;
+    private MineController currentTargetMine;
     public AudioSource audioSource;
     public AudioClip chopSound;
     public AudioClip killSound;
+    public AudioClip mineSound;
 
     private SpriteRenderer spriteRenderer;
     public Color selectedColor = Color.yellow;
@@ -63,6 +65,10 @@ public class PawnController : MonoBehaviour
             else if (hit.collider != null && hit.collider.GetComponent<SheepController>() != null)
             {
                 selectedPawn.StartAction(hit.collider.GetComponent<SheepController>());
+            }
+            if (hit.collider != null && hit.collider.GetComponent<MineController>() != null)
+            {
+                selectedPawn.StartAction(hit.collider.GetComponent<MineController>());
             }
         }
     }
@@ -118,6 +124,19 @@ public class PawnController : MonoBehaviour
         Debug.Log("Pawn starts butchering and is deselected");
     }
 
+    public void StartMining(MineController mine)
+    {
+        currentTargetMine = mine;
+        animator.Play("Mine");
+
+        // Deselect the pawn and update visuals
+        isSelected = false;
+        UpdateSelectionVisual(isSelected);
+        selectedPawn = null;
+
+        Debug.Log("Pawn starts mining and is deselected");
+    }
+
     public void OnAnimationHit()
     {
         if (currentTargetTree != null && currentTargetTree.IsAlive)
@@ -129,6 +148,11 @@ public class PawnController : MonoBehaviour
         {
             currentTargetSheep.ReceiveDamage();
             PlayKillSound();
+        }
+        else if (currentTargetMine != null && currentTargetMine.IsAlive)
+        {
+            currentTargetMine.ReceiveDamage();
+            //PlayMineSound();
         }
         else
         {
@@ -162,6 +186,10 @@ public class PawnController : MonoBehaviour
         {
             StartButchering(sheep); // Reuse chopping action for sheep
         }
+        else if (target is MineController mine)
+        {
+            StartMining(mine);
+        }
     }
 
     private bool IsBusy()
@@ -183,6 +211,15 @@ public class PawnController : MonoBehaviour
         if (currentTargetSheep != null && !currentTargetSheep.IsAlive)
         {
             StopAction();
+        }
+    }
+
+    private void CheckMineFinishGenerating()
+    {
+        if (currentTargetMine != null && !currentTargetMine.IsAlive)
+        {
+            StopAction();
+            currentTargetMine.health = 5;
         }
     }
 
