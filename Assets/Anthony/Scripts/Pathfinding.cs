@@ -184,7 +184,7 @@ public class Pathfinding
     }
 
     // Retrace le chemin à partir du nœud final vers le nœud de départ.
-    public List<PathNode> TrackBackPath(Character selectedCharacter, int x, int y)
+    public List<PathNode> TrackBackPath(int x, int y)
     {
         List<PathNode> path = new List<PathNode>();
 

@@ -17,17 +17,25 @@ public class CharacterControl : MonoBehaviour
     private Tilemap _highlightTilemap; // Tilemap utilisée pour mettre en surbrillance les cases du chemin.
 
     [SerializeField]
+    private Tilemap _selectTilemap; // Tilemap utilisée pour les cellules selectionées
+
+    [SerializeField]
     private TileBase _highlightTile; // Tuile de surbrillance.
+
+    [SerializeField]
+    private TileBase _selectTile; // Tuile de de la selection.
 
     private Character _selectedCharacter; // Personnage actuellement sélectionné.
 
     private Controls _controls; // System d'input
 
+    private bool _attackMode; // Si le mode attack et activer
+
 
     //////////////////////////////////
     //          Fonctions           //
     //////////////////////////////////
-    
+
     private void Awake()
     {
         _controls = new Controls();
@@ -38,6 +46,7 @@ public class CharacterControl : MonoBehaviour
         _controls.Enable();
 
         _controls.Gameplay.SelectCell.performed += SelectCell;
+        _controls.Gameplay.AttackMode.performed += SwitchAttackMode;
     }
 
     private void OnDisable()
@@ -45,6 +54,7 @@ public class CharacterControl : MonoBehaviour
         _controls.Disable();
 
         _controls.Gameplay.SelectCell.performed -= SelectCell;
+        _controls.Gameplay.AttackMode.performed -= SwitchAttackMode;
     }
 
     private void SelectCell(InputAction.CallbackContext value)
@@ -52,10 +62,11 @@ public class CharacterControl : MonoBehaviour
         Vector3 worldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition); // Conversion de la position de la souris en coordonnées mondiales.
         Vector3Int clickPosition = _targetTilemap.WorldToCell(worldPoint); // Conversion des coordonnées mondiales en coordonnées de la Tilemap.
 
+        _highlightTilemap.ClearAllTiles(); // Efface les tuiles de surbrillance.
+        _selectTilemap.ClearAllTiles(); // Efface la selection
+
         if (_selectedCharacter == null)
         {
-            _highlightTilemap.ClearAllTiles(); // Efface les tuiles de surbrillance.
-
             if (!GridManager.Instance.CheckPosition(clickPosition.x, clickPosition.y))
                 return;
 
@@ -63,12 +74,27 @@ public class CharacterControl : MonoBehaviour
 
             if (_selectedCharacter != null)
             {
+                // TODO : crée une gridMap pour l'attaque
+
+                int range = 0;
+
+                if (_attackMode)
+                {
+                    range = _selectedCharacter.MaxRange;
+                }
+                else 
+                {
+                    range = _selectedCharacter.CurrentMove;
+                }
+
+                _selectTilemap.SetTile(new Vector3Int(clickPosition.x, clickPosition.y, 0), _selectTile);
+
                 List<PathNode> toHighlight = new List<PathNode>();
                 GridManager.Instance.Pathfinding.Clear(); // Efface les données de chemin existantes.
                 GridManager.Instance.Pathfinding.CalculateWalkableTerrain(
                     clickPosition.x,
                     clickPosition.y,
-                    _selectedCharacter.MoveDistance,
+                    range,
                     ref toHighlight
                 );
 
@@ -80,19 +106,27 @@ public class CharacterControl : MonoBehaviour
         }
         else
         {
-            _highlightTilemap.ClearAllTiles(); // Efface les tuiles de surbrillance.
 
-            List<PathNode> path = GridManager.Instance.Pathfinding.TrackBackPath(_selectedCharacter, clickPosition.x, clickPosition.y); // Récupère le chemin jusqu'à la position cliquée.
+            List<PathNode> path = GridManager.Instance.Pathfinding.TrackBackPath(clickPosition.x, clickPosition.y); // Récupère le chemin jusqu'à la position cliquée.
 
             if (path != null)
             {
                 if (path.Count > 0)
                 {
-                    for (int i = 0; i < path.Count; i++)
+                    if (_attackMode)
                     {
-                        _highlightTilemap.SetTile(new Vector3Int(path[i].xPos, path[i].yPos, 0), _highlightTile); // Met en surbrillance les cases du chemin.
+                       Character victim = GridManager.Instance.GetCharacter(path[0].xPos, path[0].yPos); // Récupère le personnage à attaquer.
+
+                        if (victim != null)
+                        {
+                            _selectedCharacter.Attack(victim);
+                        }
                     }
-                    _selectedCharacter.GetComponent<MapElement>().MoveCharacter(path[0].xPos, path[0].yPos); // Déplace le personnage à la première case du chemin.
+                    else
+                    {
+                        _selectedCharacter.GetComponent<MapElement>().MoveCharacter(path[0].xPos, path[0].yPos, path); // Déplace le personnage à la première case du chemin.
+                    }
+                    
                 }
 
                 Deselect(); // Désélectionne le personnage après le déplacement.
@@ -100,6 +134,12 @@ public class CharacterControl : MonoBehaviour
         }
 
         
+    }
+
+    public void SwitchAttackMode(InputAction.CallbackContext value)
+    {
+        if (_selectedCharacter == null) // On peut selement changer de mode quand aucoun personage n'est selectioné
+            _attackMode = !_attackMode;
     }
 
     // Désélectionne le personnage
