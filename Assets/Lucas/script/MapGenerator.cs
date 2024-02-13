@@ -76,7 +76,7 @@ public class MapGenerator : MonoBehaviour
 
     public float baseRockSpawnChance = 0.1f;
 
-
+    
     private void Start()
     {
         StartGeneration();
@@ -110,6 +110,7 @@ public class MapGenerator : MonoBehaviour
         stoneOffsetY = Random.Range(0f, 9999f);
 
         GenerateMap();
+
     }
 
     void ClearTilemap(Tilemap tilemap)
@@ -150,6 +151,7 @@ public class MapGenerator : MonoBehaviour
         }
 
         // Additional tile rules
+        ConnectClosestRegions(FindIsolatedRegions());
         AddFoamToShore();
         EnforceStoneRule();
         AddGrassUnderStoneBorders();
@@ -172,8 +174,154 @@ public class MapGenerator : MonoBehaviour
         GridManager.Instance.GetComponent<SaveLoadMap>().Save();
         GridManager.Instance.GetComponent<SaveLoadMap>().Load();
 
-
     }
+
+    List<List<Vector3Int>> FindIsolatedRegions()
+    {
+        List<List<Vector3Int>> isolatedRegions = new List<List<Vector3Int>>();
+        HashSet<Vector3Int> visited = new HashSet<Vector3Int>();
+
+        for (int x = 0; x < mapWidth; x++)
+        {
+            for (int y = 0; y < mapHeight; y++)
+            {
+                Vector3Int pos = new Vector3Int(x, y, 0);
+                if (!visited.Contains(pos) && grassTilemap.HasTile(pos))
+                {
+                    List<Vector3Int> newRegion = BFSGrassRegion(pos, visited);
+                    isolatedRegions.Add(newRegion);
+                }
+            }
+        }
+
+        return isolatedRegions;
+    }
+
+    List<Vector3Int> BFSGrassRegion(Vector3Int start, HashSet<Vector3Int> visited)
+    {
+        List<Vector3Int> region = new List<Vector3Int>();
+        Queue<Vector3Int> queue = new Queue<Vector3Int>();
+
+        queue.Enqueue(start);
+        visited.Add(start);
+
+        while (queue.Count > 0)
+        {
+            Vector3Int current = queue.Dequeue();
+            region.Add(current);
+
+            foreach (var dir in new Vector3Int[] { Vector3Int.up, Vector3Int.down, Vector3Int.left, Vector3Int.right })
+            {
+                Vector3Int neighbor = current + dir;
+                if (IsInBounds(neighbor) && !visited.Contains(neighbor) && grassTilemap.HasTile(neighbor))
+                {
+                    visited.Add(neighbor);
+                    queue.Enqueue(neighbor);
+                }
+            }
+        }
+
+        return region;
+    }
+
+    bool IsInBounds(Vector3Int pos)
+    {
+        return pos.x >= 0 && pos.x < mapWidth && pos.y >= 0 && pos.y < mapHeight;
+    }
+
+
+    void ConnectClosestRegions(List<List<Vector3Int>> regions)
+    {
+        // Conceptual outline: Further details needed for actual obstacle avoidance and pathfinding.
+        for (int i = 0; i < regions.Count; i++)
+        {
+            List<Vector3Int> regionA = regions[i];
+            List<Vector3Int> closestRegion = null;
+            float closestDistance = float.MaxValue;
+            Vector3Int closestPointA = Vector3Int.zero, closestPointB = Vector3Int.zero;
+
+            for (int j = 0; j < regions.Count; j++)
+            {
+                if (i == j) continue;
+                List<Vector3Int> regionB = regions[j];
+
+                foreach (var pointA in regionA)
+                {
+                    foreach (var pointB in regionB)
+                    {
+                        float distance = Vector3Int.Distance(pointA, pointB);
+                        if (distance < closestDistance)
+                        {
+                            closestDistance = distance;
+                            closestRegion = regionB;
+                            closestPointA = pointA;
+                            closestPointB = pointB;
+                        }
+                    }
+                }
+            }
+
+            if (closestRegion != null)
+            {
+                ConnectTwoPointsSimple(closestPointA, closestPointB);
+            }
+        }
+    }
+
+    void ConnectTwoPointsSimple(Vector3Int start, Vector3Int end)
+    {
+        // Bresenham's line algorithm for a straight line between two points
+        int x0 = start.x, y0 = start.y;
+        int x1 = end.x, y1 = end.y;
+
+        int dx = Mathf.Abs(x1 - x0);
+        int dy = -Mathf.Abs(y1 - y0);
+
+        int sx = x0 < x1 ? 1 : -1;
+        int sy = y0 < y1 ? 1 : -1;
+        int err = dx + dy, e2; /* error value e_xy */
+
+        int perpX = dy == 0 ? 0 : (dy < 0 ? -1 : 1);
+        int perpY = dx == 0 ? 0 : (dx < 0 ? -1 : 1);
+
+        for (; ; )
+        {
+            ApplyGrassTile(x0, y0);
+
+            // Apply grass to additional tiles on each side of the primary line.
+            // Adjust the range (-1, 1) to widen or narrow the path.
+            for (int i = -1; i <= 1; i++)
+            {
+                if (dx > dy)
+                {
+                    // Wider path in y direction
+                    ApplyGrassTile(x0, y0 + i);
+                }
+                else
+                {
+                    // Wider path in x direction
+                    ApplyGrassTile(x0 + i, y0);
+                }
+            }
+
+            if (x0 == x1 && y0 == y1) break;
+            e2 = 2 * err;
+            if (e2 >= dy) { err += dy; x0 += sx; } /* e_xy+e_x > 0 */
+            if (e2 <= dx) { err += dx; y0 += sy; } /* e_xy+e_y < 0 */
+        }
+    }
+
+    void ApplyGrassTile(int x, int y)
+    {
+        if (x >= 0 && x < mapWidth && y >= 0 && y < mapHeight)
+        {
+            Vector3Int tilePosition = new Vector3Int(x, y, 0);
+            stoneTilemap.SetTile(tilePosition, null); // Remove stone tile, if any
+            grassTilemap.SetTile(tilePosition, grassRuleTile); // Place grass tile
+        }
+    }
+
+
 
 
 
@@ -195,6 +343,7 @@ public class MapGenerator : MonoBehaviour
             stoneTilemap.SetTile(new Vector3Int(x, y, 0), stoneRuleTile);
         }
     }
+
 
 
     void AddFoamToShore()
@@ -656,6 +805,4 @@ public class MapGenerator : MonoBehaviour
             }
         }
     }
-
-
 }
