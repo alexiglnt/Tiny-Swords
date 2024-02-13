@@ -174,6 +174,9 @@ public class MapGenerator : MonoBehaviour
         GridManager.Instance.GetComponent<SaveLoadMap>().Save();
         GridManager.Instance.GetComponent<SaveLoadMap>().Load();
 
+        EcosystemScoreManager.Instance.ResetScore(); // To ensure score starts at 0
+        EcosystemScoreManager.Instance.EnableScoring();
+
     }
 
     List<List<Vector3Int>> FindIsolatedRegions()
