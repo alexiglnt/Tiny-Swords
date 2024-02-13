@@ -147,10 +147,10 @@ public class GridManager : Singleton<GridManager>
     }
 
 
-    // Récupère le personnage à la position spécifiée dans la grille.
-    public Character GetCharacter(int x, int y)
+    // Récupère l'élément à la position spécifiée dans la grille.
+    public MapElement GetMapElement(int x, int y)
     {
-        return GridMap.GetCharacter(x, y);
+        return GridMap.GetMapElement(x, y);
     }
 
     // Définit la tuile dans la grille et met à jour le Tilemap.
