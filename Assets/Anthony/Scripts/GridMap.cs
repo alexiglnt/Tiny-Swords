@@ -4,7 +4,7 @@ using UnityEngine;
 public class Node
 {
     public int tileId;
-    public Character character;
+    public MapElement mapElement;
 }
 
 // Classe principale qui représente la grid avec ce qu'elle contienne
@@ -54,16 +54,16 @@ public class GridMap
         _width = width;
     }
 
-    // Efface le personnage à la position spécifiée dans la grille.
-    public void ClearCharacter(int xPos, int yPos)
+    // Efface l'élément à la position spécifiée dans la grille.
+    public void ClearMapElement(int xPos, int yPos)
     {
-        _grid[xPos, yPos].character = null;
+        _grid[xPos, yPos].mapElement = null;
     }
 
-    // Définit le personnage à la position spécifiée dans la grille.
-    public void SetCharacter(MapElement mapElement, int x_pos, int y_pos)
+    // Définit l'élément à la position spécifiée dans la grille.
+    public void SetMapElement(MapElement mapElement, int x_pos, int y_pos)
     {
-        _grid[x_pos, y_pos].character = mapElement.GetComponent<Character>();
+        _grid[x_pos, y_pos].mapElement = mapElement;
     }
 
     // Définit l'identifiant de tuile à la position spécifiée dans la grille.
@@ -104,15 +104,15 @@ public class GridMap
         return true;
     }
 
-    // Récupère le personnage à la position spécifiée dans la grille.
-    public Character GetCharacter(int x, int y)
+    // Récupère l'élément à la position spécifiée dans la grille.
+    public MapElement GetMapElement(int x, int y)
     {
-        return _grid[x, y].character;
+        return _grid[x, y].mapElement;
     }
 
     // Vérifie si la position spécifiée dans la grille est marchable.
     public bool CheckWalkable(int xPos, int yPos)
     {
-        return _grid[xPos, yPos].tileId == 0 && _grid[xPos, yPos].character == null;
+        return _grid[xPos, yPos].tileId == 0 && _grid[xPos, yPos].mapElement == null;
     }
 }

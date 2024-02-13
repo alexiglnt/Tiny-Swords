@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Element { Character, Tree}
-
 // Gère le positionnement et le déplacement d'un élément dans une grille.
 public class MapElement : MonoBehaviour
 {
@@ -49,7 +47,7 @@ public class MapElement : MonoBehaviour
     // Met à jour la position dans la grille et place l'objet à la nouvelle position.
     private void MoveTo(int targetPosX, int targetPosY)
     {
-        _gridMap.SetCharacter(this, targetPosX, targetPosY); // Met à jour la position du personnage dans la grille.
+        _gridMap.SetMapElement(this, targetPosX, targetPosY); // Met à jour la position de l'élément dans la grille.
         _xPos = targetPosX; // Met à jour la position en X.
         _yPos = targetPosY; // Met à jour la position en Y.
     }
@@ -61,13 +59,13 @@ public class MapElement : MonoBehaviour
         Vector3 pos = t.position;
         _xPos = (int)pos.x; // Obtient la position en X à partir de la position du transform.
         _yPos = (int)pos.y; // Obtient la position en Y à partir de la position du transform.
-        _gridMap.SetCharacter(this, _xPos, _yPos); // Place l'objet sur la grille.
+        _gridMap.SetMapElement(this, _xPos, _yPos); // Place l'objet sur la grille.
     }
 
     // Retire l'objet de sa position actuelle dans la grille.
     private void RemoveObjectFromGrid()
     {
-        _gridMap.ClearCharacter(_xPos, _yPos); // Retire l'objet de la grille.
+        _gridMap.ClearMapElement(_xPos, _yPos); // Retire l'objet de la grille.
     }
 
 
