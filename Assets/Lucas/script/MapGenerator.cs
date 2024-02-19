@@ -76,7 +76,9 @@ public class MapGenerator : MonoBehaviour
 
     public float baseRockSpawnChance = 0.1f;
 
-    
+    public GameObject EnemyVillage;
+    public GameObject PlayerVillage;
+
     private void Start()
     {
         StartGeneration();
@@ -157,13 +159,16 @@ public class MapGenerator : MonoBehaviour
         AddGrassUnderStoneBorders();
         AddFoamAtBorders(waterTilemap, foamTilemap, foamRuleTile);
 
+        // Setup villages
+        List<(Vector3 Position, float Radius)> listOfVillages = SetupVillages();
+        
         // Place rocks and trees last
         PlaceAnimatedRocks();
-        GenerateForest();
+        GenerateForest(listOfVillages);
 
-        // Last step: place decorative elements
+        // place decorative elements
         PlaceDecorations();
-        
+
         // Refresh all tilemaps
         waterTilemap.RefreshAllTiles();
         foamTilemap.RefreshAllTiles();
@@ -527,7 +532,7 @@ public class MapGenerator : MonoBehaviour
     }
 
 
-    void GenerateForest()
+    void GenerateForest(List<(Vector3 Position, float Radius)> listOfVillages)
     {
         for (int x = 0; x < mapWidth; x++)
         {
@@ -540,7 +545,7 @@ public class MapGenerator : MonoBehaviour
                 }
             }
         }
-        CleanupTrees();
+        CleanupTrees(listOfVillages);
     }
 
 
@@ -587,27 +592,34 @@ public class MapGenerator : MonoBehaviour
     }
 
 
-    void CleanupTrees()
+    void CleanupTrees(List<(Vector3 Position, float Radius)> listOfVillages)
     {
         // Create a list to hold all trees to be removed
         List<GameObject> treesToRemove = new List<GameObject>();
 
-        // Find all trees that are out of bounds or on invalid tiles
+        // Find all tree GameObjects within the cleanup radius of any village center
         foreach (Transform child in treesParent.transform)
         {
-            Vector3Int treeCellPosition = grassTilemap.WorldToCell(child.position);
-            if (!IsValidTreePosition(treeCellPosition))
+            foreach (var village in listOfVillages)
             {
-                treesToRemove.Add(child.gameObject);
+                Vector3 center = village.Position;
+                float radius = village.Radius;
+                float squaredRadius = radius * radius;
+
+                if ((child.position - center).sqrMagnitude <= squaredRadius)
+                {
+                    treesToRemove.Add(child.gameObject);
+                }
             }
         }
 
-        // Remove the invalid trees from the scene
+        // Remove all trees in the list
         foreach (GameObject tree in treesToRemove)
         {
             Destroy(tree);
         }
     }
+
 
     bool IsValidTreePosition(Vector3Int cellPosition)
     {
@@ -808,4 +820,158 @@ public class MapGenerator : MonoBehaviour
             }
         }
     }
+
+    List<Vector3Int> FindSuitableLocations(Tilemap tilemap, int requiredSpace)
+    {
+        List<Vector3Int> suitableLocations = new List<Vector3Int>();
+
+        for (int x = 0; x < mapWidth; x++)
+        {
+            for (int y = 0; y < mapHeight; y++)
+            {
+                Vector3Int tilePosition = new Vector3Int(x, y, 0);
+                if (IsLocationSuitable(tilemap, tilePosition, requiredSpace))
+                {
+                    suitableLocations.Add(tilePosition);
+                }
+            }
+        }
+
+        return suitableLocations;
+    }
+
+    bool IsLocationSuitable(Tilemap tilemap, Vector3Int location, int requiredSpace)
+    {
+        // Check if the central tile itself is grass and not a tree
+        if (!IsGrassTile(tilemap, location)) return false;
+
+        int grassTileCount = 0;
+        int radius = Mathf.CeilToInt(Mathf.Sqrt(requiredSpace / Mathf.PI)); // Circular approximation for required space
+
+        // Expand the iteration area for checking stone tiles around the potential location
+        int checkRadius = radius + 1; // +2 to check for stone tiles just outside the village area
+
+        for (int x = -checkRadius; x <= checkRadius; x++)
+        {
+            for (int y = -checkRadius; y <= checkRadius; y++)
+            {
+                Vector3Int currentPos = new Vector3Int(location.x + x, location.y + y, location.z);
+
+                if (x >= -radius && x <= radius && y >= -radius && y <= radius)
+                {
+                    // Core village area checks (within radius)
+                    if (IsGrassTile(tilemap, currentPos))
+                    {
+                        grassTileCount++;
+                    }
+                    else
+                    {
+                        // Early return if a tree is found within the intended village area
+                        return false;
+                    }
+                }
+                else
+                {
+                    // Check surrounding area only for stone tiles (outside core village area but within checkRadius)
+                    if (IsStoneTile(tilemap, currentPos))
+                    {
+                        return false; // Avoid locations adjacent to stone tiles
+                    }
+                }
+            }
+        }
+
+        return grassTileCount >= requiredSpace;
+    }
+
+
+    // Helper method to check if a tile at a given position is a grass tile
+    bool IsGrassTile(Tilemap tilemap, Vector3Int position)
+    {
+        TileBase tile = tilemap.GetTile(position);
+        return tile != null && tile == grassRuleTile; // Assuming 'grassRuleTile' is the reference to your grass tile
+    }
+
+    // Helper method to check if a tile at a given position is a tree tile
+    bool IsStoneTile(Tilemap tilemap, Vector3Int position)
+    {
+        TileBase tile = tilemap.GetTile(position);
+        return tile != null && tile == stoneRuleTile; // Assuming 'treeRuleTile' is the reference to your tree tile
+    }
+
+
+
+    (Vector3Int playerVillage, Vector3Int enemyVillage) ChooseVillageLocations(List<Vector3Int> locations)
+    {
+        Vector3Int playerVillage = new Vector3Int(-1, -1, -1);
+        Vector3Int enemyVillage = new Vector3Int(-1, -1, -1);
+        float maxDistance = 0f; // Initialize with 0 to ensure any positive distance will be larger
+
+        for (int i = 0; i < locations.Count; i++)
+        {
+            for (int j = i + 1; j < locations.Count; j++)
+            {
+                float distance = Vector3Int.Distance(locations[i], locations[j]);
+                if (distance > maxDistance) // Use '>' to ensure the farthest pair is selected
+                {
+                    maxDistance = distance;
+                    playerVillage = locations[i];
+                    enemyVillage = locations[j];
+                }
+            }
+        }
+
+        return (playerVillage, enemyVillage);
+    }
+
+
+    void SpawnVillage(Vector3Int location, GameObject villagePrefab)
+    {
+        // Convert tilemap location to world space, adjust as necessary for your project
+        Vector3 worldPosition = grassTilemap.CellToWorld(location) + new Vector3(0.5f, 0.5f, 0); // Centering the prefab
+        Instantiate(villagePrefab, worldPosition, Quaternion.identity);
+    }
+
+    // Example usage
+    List<(Vector3 Position, float Radius)> SetupVillages()
+    {
+        int requiredSpace = 20;
+        var suitableLocations = FindSuitableLocations(grassTilemap, requiredSpace); // Example requiredSpace
+        var (playerVillagePos, enemyVillagePos) = ChooseVillageLocations(suitableLocations); // Example minDistance
+
+        float playerVillageRadius = CalculateVillageRadius(requiredSpace,2);
+        float enemyVillageRadius = CalculateVillageRadius(requiredSpace,2);
+
+        if (playerVillagePos != new Vector3Int (-1,-1,-1) && enemyVillagePos != new Vector3Int(-1, -1, -1))
+        {
+            GameObject playerVillagePrefab = PlayerVillage; // Assign your prefab
+            GameObject enemyVillagePrefab = EnemyVillage; // Assign your prefab
+
+            SpawnVillage(playerVillagePos, playerVillagePrefab);
+            SpawnVillage(enemyVillagePos, enemyVillagePrefab);
+        }
+        else
+        {
+            Debug.LogError("Failed to find suitable locations for villages.");
+        }
+        // Initialize the list with positions
+        List<(Vector3 Position, float Radius)> listOfVillages = new List<(Vector3 Position, float Radius)>
+        {
+            (playerVillagePos, playerVillageRadius),
+            (enemyVillagePos, enemyVillageRadius)
+        };
+
+        return listOfVillages;
+    }
+
+    float CalculateVillageRadius(int requiredSpace, float buffer = 0)
+    {
+        // Calculate the basic radius from required space
+        float radius = Mathf.Sqrt(requiredSpace / Mathf.PI);
+
+        // Add buffer to the radius to account for additional space around the village
+        return radius + buffer;
+    }
+
+
 }

@@ -4161,6 +4161,8 @@ MonoBehaviour:
   offsetX: 0
   offsetY: 0
   baseRockSpawnChance: 0.5
+  EnemyVillage: {fileID: 788434939265690316, guid: 39e7f1d2a6c05064d82f7dd831b441d4, type: 3}
+  PlayerVillage: {fileID: 6758217364365666103, guid: b43cab632c9e954469a7862c61e76230, type: 3}
 --- !u!4 &1120070988
 Transform:
   m_ObjectHideFlags: 0
