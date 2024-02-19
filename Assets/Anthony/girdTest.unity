@@ -1492,7 +1492,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _groundMapData: {fileID: 11400000, guid: acd7b866b8858e54ab3c5cc82d124bc8, type: 2}
-  _obstacleMapData: {fileID: 0}
 --- !u!1 &1421357056 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6758217364365666103, guid: b43cab632c9e954469a7862c61e76230, type: 3}

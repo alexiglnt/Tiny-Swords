@@ -63,7 +63,9 @@ public class GridMap
     // Définit l'élément à la position spécifiée dans la grille.
     public void SetMapElement(MapElement mapElement, int x_pos, int y_pos)
     {
-        _grid[x_pos, y_pos].mapElement = mapElement;
+        // On verifi que la position existe dans la grid
+        if(x_pos >= 0 && x_pos < Width && y_pos >= 0 && y_pos < Height)
+            _grid[x_pos, y_pos].mapElement = mapElement;
     }
 
     // Définit l'identifiant de tuile à la position spécifiée dans la grille.
