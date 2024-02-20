@@ -11,8 +11,8 @@ public class SaveLoadMap : MonoBehaviour
     [SerializeField]
     private MapData _groundMapData;   // Les données de la carte du sol à sauvegarder ou charger.
 
-    [SerializeField]
-    private MapData _obstacleMapData;   // Les données de la carte des obstacles à sauvegarder ou charger.
+    //[SerializeField]
+    //private MapData _obstacleMapData;   // Les données de la carte des obstacles à sauvegarder ou charger.
 
     //////////////////////////////////
     //          Fonctions           // 
@@ -28,16 +28,16 @@ public class SaveLoadMap : MonoBehaviour
         _groundMapData.height = groundMap.GetLength(1);
         _groundMapData.map = new List<int>();
 
-        _obstacleMapData.width = obstacleMap.GetLength(0);
-        _obstacleMapData.height = obstacleMap.GetLength(1);
-        _obstacleMapData.map = new List<int>();
+        //_obstacleMapData.width = obstacleMap.GetLength(0);
+        //_obstacleMapData.height = obstacleMap.GetLength(1);
+        //_obstacleMapData.map = new List<int>();
 
         for (int x = 0; x < _groundMapData.width; x++)
         {
             for (int y = 0; y < _groundMapData.height; y++)
             {
                 _groundMapData.map.Add(groundMap[x, y]); // Ajoute les données du tableau à la liste du sol.
-                _obstacleMapData.map.Add(obstacleMap[x, y]); // Ajoute les données du tableau à la liste des obstacles.
+                //_obstacleMapData.map.Add(obstacleMap[x, y]); // Ajoute les données du tableau à la liste des obstacles.
             }
         }
 #if UNITY_EDITOR

@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 
 // Gère le positionnement et le déplacement d'un élément dans une grille.
 public class MapElement : MonoBehaviour
@@ -8,6 +10,15 @@ public class MapElement : MonoBehaviour
     //////////////////////////////////
     //          Variables           //
     //////////////////////////////////
+
+    // tableau de bool pour specifier quelle zone ocupe l element
+    private bool[,] _occupiedArea;
+
+    public bool[,] OccupiedArea
+    {
+        get { return _occupiedArea; }
+        private set { _occupiedArea = value; }
+    }
 
     private GridMap _gridMap; // Référence à la grille.
 
@@ -18,6 +29,9 @@ public class MapElement : MonoBehaviour
     private Coroutine _moveCoroutine; // La coroutine de déplacement en cours
 
     private Animator _animator; // Le composant Animator du personnage
+
+    [SerializeField]
+    private OccupiedAreaData _occupiedAreaData; // Donnees de l'emplacement de l element
 
     //////////////////////////////////////////
     //          Fonctions private           //
@@ -31,6 +45,45 @@ public class MapElement : MonoBehaviour
     private void OnEnable()
     {
         SetGrid(); // Initialise la référence à la grille.
+
+        // Initialise les placement de l objet
+        OccupiedArea = new bool[3, 3];
+
+        if (_occupiedAreaData != null)
+        {
+            OccupiedArea[0, 0] = _occupiedAreaData.x_1y_1;
+            OccupiedArea[1, 0] = _occupiedAreaData.x0y_1;
+            OccupiedArea[2, 0] = _occupiedAreaData.x1y_1;
+
+            OccupiedArea[0, 1] = _occupiedAreaData.x_1y0;
+            OccupiedArea[1, 1] = _occupiedAreaData.x0y0;
+            OccupiedArea[2, 1] = _occupiedAreaData.x1y0;
+
+            OccupiedArea[0, 2] = _occupiedAreaData.x_1y1;
+            OccupiedArea[1, 2] = _occupiedAreaData.x0y1;
+            OccupiedArea[2, 2] = _occupiedAreaData.x1y1;
+
+            for (int x = 0; x <= 2; x++)
+            {
+                for (int y = 0; y <= 2; y++)
+                {
+                    Debug.Log("x : " + x + ", y : " + y + ", value = " + OccupiedArea[x, y]);
+                }
+            }
+            
+        }
+        else
+        {
+            for (int x = 0; x < 2; x++)
+            {
+                for (int y = 0; y < 2; y++)
+                {
+                    OccupiedArea[x, y] = false;
+                }
+            }
+            OccupiedArea[1, 1] = true;
+        }
+
         PlaceObjectOnGrid(); // Place l'objet sur la grille lors du démarrage.
     }
 
@@ -59,13 +112,36 @@ public class MapElement : MonoBehaviour
         Vector3 pos = t.position;
         _xPos = (int)pos.x; // Obtient la position en X à partir de la position du transform.
         _yPos = (int)pos.y; // Obtient la position en Y à partir de la position du transform.
-        _gridMap.SetMapElement(this, _xPos, _yPos); // Place l'objet sur la grille.
+
+        // PLace l objet sur les diferent case qu il occupe
+        for (int x = 0; x <= 2; x++)
+        {
+            for (int y = 0; y <= 2; y++)
+            {
+                if (OccupiedArea[x, y] == true)
+                {
+                    _gridMap.SetMapElement(this, _xPos + (x-1), _yPos + (y-1)); // Place l'objet sur la grille.
+                }
+            }
+        }
+        
     }
 
     // Retire l'objet de sa position actuelle dans la grille.
     private void RemoveObjectFromGrid()
     {
-        _gridMap.ClearMapElement(_xPos, _yPos); // Retire l'objet de la grille.
+        // Retire l objet sur les diferent case qu il occupe
+        for (int x = 0; x <= 2; x++)
+        {
+            for (int y = 0; y <= 2; y++)
+            {
+                if (OccupiedArea[x, y] == true)
+                {
+                    _gridMap.ClearMapElement(_xPos + (x - 1), _yPos + (y - 1)); // Retire l'objet de la grille.
+                }
+            }
+        }
+        
     }
 
 
