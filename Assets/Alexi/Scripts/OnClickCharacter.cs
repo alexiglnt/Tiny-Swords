@@ -8,7 +8,7 @@ public class OnClickCharacter : MonoBehaviour
     public Card card;
     public CardDisplay cardDisplay; // Référence au script CardDisplay
     public GameObject CardCanvas; // Référence au canvas de la carte
-
+    public GameObject CardDisplayUI; // Référence à l'UI de la carte
 
     // Appelé lorsque le clic est détecté
     public void OnMouseDown()
