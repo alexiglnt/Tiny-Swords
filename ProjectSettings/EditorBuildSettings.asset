@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Alexi/Scenes/Menu.unity
     guid: 7bc5559b0def40d49b1cf10af7527eee
   - enabled: 1
+    path: Assets/Alexi/Scenes/MergeScene.unity
+    guid: bcc499e97f85b094d8868e48a7f42fa1
+  - enabled: 1
     path: Assets/Alexi/Scenes/Test_Cards.unity
     guid: 7459059975ce0f14a8990f83264dc9f1
   - enabled: 1

@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a457c0a2166c3da42b3c1780de424b0d, type: 3}
+  m_Name: warrior_blue
+  m_EditorClassIdentifier: 
+  name: Blue Knight
+  description: Chevalier de la faction bleu
+  artwork: {fileID: -2154411016614689198, guid: 18e4c9472334291449e402a8cba9fb84, type: 3}
+  attackMax: 9
+  scopeMax: 1
+  healthCurrent: 5
+  movementCurrent: 2
+  healthMax: 7
+  movevementMax: 3
