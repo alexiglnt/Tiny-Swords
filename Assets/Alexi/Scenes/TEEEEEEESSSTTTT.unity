@@ -732,6 +732,7 @@ GameObject:
   - component: {fileID: 181873028}
   - component: {fileID: 181873031}
   - component: {fileID: 181873032}
+  - component: {fileID: 181873033}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -849,6 +850,20 @@ MonoBehaviour:
   _selectTilemap: {fileID: 1905285617}
   _highlightTile: {fileID: 11400000, guid: 4218b61c1f67931489351a16c117432c, type: 2}
   _selectTile: {fileID: 11400000, guid: 8cc80733b59f82a47951f3d69b49aa09, type: 2}
+--- !u!114 &181873033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 181873027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75ef3d3a90250f940860f4733f93ce6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mode: 0
+  showDifference: 0
 --- !u!4 &256059158 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3182930686811910783, guid: 19dbc396f50e9844f95bdbe8bd554002, type: 3}
@@ -1104,7 +1119,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &319149900
 Transform:
   m_ObjectHideFlags: 0
@@ -4012,10 +4027,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2660954139418664802, guid: fc7226053da158b44a4ba8dda4e1f145, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2.4880915
+      objectReference: {fileID: 0}
+    - target: {fileID: 2660954139418664802, guid: fc7226053da158b44a4ba8dda4e1f145, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2.4880915
+      objectReference: {fileID: 0}
+    - target: {fileID: 2660954139418664802, guid: fc7226053da158b44a4ba8dda4e1f145, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2.4880915
+      objectReference: {fileID: 0}
+    - target: {fileID: 2660954139418664802, guid: fc7226053da158b44a4ba8dda4e1f145, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 2660954139418664802, guid: fc7226053da158b44a4ba8dda4e1f145, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 4901056948373290478, guid: fc7226053da158b44a4ba8dda4e1f145, type: 3}
       propertyPath: m_Camera
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 181873029}
     - target: {fileID: 4949497300275940847, guid: fc7226053da158b44a4ba8dda4e1f145, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -6287,8 +6322,8 @@ Canvas:
   m_GameObject: {fileID: 1870847698}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 181873029}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -6298,7 +6333,7 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
+  m_SortingLayerID: 981531967
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!1 &1905285614
