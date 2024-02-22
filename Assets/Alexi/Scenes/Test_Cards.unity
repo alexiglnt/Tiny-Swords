@@ -305,6 +305,7 @@ MonoBehaviour:
   card: {fileID: 11400000, guid: 17fe0e636284d24429988893a4a98885, type: 2}
   cardDisplay: {fileID: 238907528}
   CardCanvas: {fileID: 238907527}
+  CardDisplayUI: {fileID: 0}
 --- !u!1 &30634262
 GameObject:
   m_ObjectHideFlags: 0
@@ -3670,7 +3671,7 @@ Tilemap:
       - {fileID: 1617045905, guid: 969d8e0103544aa4db8b51e1f170b504, type: 3}
       - {fileID: 1592047405, guid: 969d8e0103544aa4db8b51e1f170b504, type: 3}
       - {fileID: -952298850, guid: 969d8e0103544aa4db8b51e1f170b504, type: 3}
-      m_AnimationSpeed: 10
+      m_AnimationSpeed: 10.000001
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -10, y: -7, z: 0}
@@ -3700,7 +3701,7 @@ Tilemap:
       - {fileID: -828480346, guid: eaebe83090b1dde42b06182c27f90d7e, type: 3}
       - {fileID: -1686370914, guid: eaebe83090b1dde42b06182c27f90d7e, type: 3}
       - {fileID: 2016656937, guid: eaebe83090b1dde42b06182c27f90d7e, type: 3}
-      m_AnimationSpeed: 10.000001
+      m_AnimationSpeed: 10
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -6, y: -7, z: 0}
@@ -4150,7 +4151,7 @@ Tilemap:
       - {fileID: 675192732, guid: fe3e7f0c298297b479bbaea1ba29c113, type: 3}
       - {fileID: -1813755921, guid: fe3e7f0c298297b479bbaea1ba29c113, type: 3}
       - {fileID: 523146377, guid: fe3e7f0c298297b479bbaea1ba29c113, type: 3}
-      m_AnimationSpeed: 10.000001
+      m_AnimationSpeed: 10
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -13, y: 0, z: 0}
@@ -6981,6 +6982,7 @@ MonoBehaviour:
   card: {fileID: 11400000, guid: c91f8d57ec3d8ff43b5539dbab0ee74f, type: 2}
   cardDisplay: {fileID: 238907528}
   CardCanvas: {fileID: 238907527}
+  CardDisplayUI: {fileID: 0}
 --- !u!1 &2038188594
 GameObject:
   m_ObjectHideFlags: 0
@@ -7046,7 +7048,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2132794654
 Transform:
   m_ObjectHideFlags: 0
@@ -7079,6 +7081,7 @@ MonoBehaviour:
   card: {fileID: 11400000, guid: 5aba3e3b08fbe5d4f967e11c56d72f8e, type: 2}
   cardDisplay: {fileID: 238907528}
   CardCanvas: {fileID: 238907527}
+  CardDisplayUI: {fileID: 0}
 --- !u!1001 &570077675593852039
 PrefabInstance:
   m_ObjectHideFlags: 0
