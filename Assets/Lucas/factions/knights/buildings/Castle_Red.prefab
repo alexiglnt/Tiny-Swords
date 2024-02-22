@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3125452446390909044}
   - component: {fileID: 5753663564868840442}
   - component: {fileID: -5931637619548953245}
+  - component: {fileID: -6862575596234771861}
   m_Layer: 0
   m_Name: Castle_Red
   m_TagString: Untagged
@@ -98,3 +99,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mapHeight: 100
+--- !u!114 &-6862575596234771861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 788434939265690316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f365206d32e2bf45af7536c3dd48139, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _occupiedAreaData: {fileID: 11400000, guid: bd45aa158b8e17e43999f8c0deffbdcf, type: 2}
