@@ -126,9 +126,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16700a4a410177a47bdbdb1a2272e312, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  card: {fileID: 11400000, guid: 67c385e18680f2a4ab60499278112ea8, type: 2}
-  cardDisplay: {fileID: 0}
-  BuildingCardCanvas: {fileID: 0}
+  card: {fileID: 11400000, guid: 0383887a6c9780242a48c7556e7a2590, type: 2}
+  BuildingCardCanvas: {fileID: 450783538383403905, guid: 10ccf25ca937e844eb8bea4f838ee1e0, type: 3}
 --- !u!61 &5108396286817433665
 BoxCollider2D:
   m_ObjectHideFlags: 0

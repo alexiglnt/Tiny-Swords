@@ -6,7 +6,7 @@ public class EcosystemScoreManager : MonoBehaviour
     private int score;
     private bool canAffectScore = false;
 
-    void Awake()
+    private void Awake()
     {
         if (Instance == null)
         {
@@ -28,13 +28,7 @@ public class EcosystemScoreManager : MonoBehaviour
         }
     }
 
-    public void EnableScoring()
-    {
-        canAffectScore = true;
-    }
+    public void EnableScoring() => canAffectScore = true;
 
-    public void ResetScore()
-    {
-        score = 0;
-    }
+    public void ResetScore() => score = 0;
 }

@@ -350,11 +350,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4834370636999566786, guid: 6f04e73a38442b44e9ca99f308fb572b, type: 3}
       propertyPath: m_Name
-      value: BuildingUI 1
+      value: CastleBlueUI
       objectReference: {fileID: 0}
     - target: {fileID: 4834370636999566786, guid: 6f04e73a38442b44e9ca99f308fb572b, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5008395704873095919, guid: 6f04e73a38442b44e9ca99f308fb572b, type: 3}
       propertyPath: m_text
@@ -918,7 +918,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cbcaa7ec22e70f4eae20004e8cdae2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  card: {fileID: 11400000, guid: 67c385e18680f2a4ab60499278112ea8, type: 2}
+  card: {fileID: 11400000, guid: 0383887a6c9780242a48c7556e7a2590, type: 2}
   nameText: {fileID: 9116330051505009120}
   descriptionText: {fileID: 6209847963910225858}
   artworkImage: {fileID: 8554246340793309985}

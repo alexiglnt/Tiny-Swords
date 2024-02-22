@@ -76,8 +76,12 @@ public class MapGenerator : MonoBehaviour
 
     public float baseRockSpawnChance = 0.1f;
 
+    public GameObject MainCamera;
+
     public GameObject EnemyVillage;
     public GameObject PlayerVillage;
+    public GameObject[] EnemyTroops;
+    public GameObject[] PlayerTroops;
 
     private void Start()
     {
@@ -113,15 +117,14 @@ public class MapGenerator : MonoBehaviour
 
         GenerateMap();
 
+        EcosystemScoreManager.Instance.ResetScore(); // To ensure score starts at 0
+        EcosystemScoreManager.Instance.EnableScoring();
     }
 
-    void ClearTilemap(Tilemap tilemap)
-    {
-        tilemap.ClearAllTiles(); // This will clear all tiles in the tilemap
-    }
+    void ClearTilemap(Tilemap tilemap) => tilemap.ClearAllTiles(); // This will clear all tiles in the tilemap
 
     // Call this function before you start generating your new tile map
-    void ResetTilemaps(Tilemap[] tilemaps)
+    private void ResetTilemaps(Tilemap[] tilemaps)
     {
         foreach (Tilemap tilemap in tilemaps)
         {
@@ -129,7 +132,7 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-    void StartGeneration()
+    private void StartGeneration()
     {
         Tilemap[] tilemapsToReset = new Tilemap[] { stoneTilemap, grassTilemap, mountailGrassTilemap, waterTilemap, foamTilemap };
         ResetTilemaps(tilemapsToReset);
@@ -137,10 +140,7 @@ public class MapGenerator : MonoBehaviour
         // Your generation code here
     }
 
-
-
-
-    void GenerateMap()
+    private void GenerateMap()
     {
 
         // Generate base tiles
@@ -159,16 +159,6 @@ public class MapGenerator : MonoBehaviour
         AddGrassUnderStoneBorders();
         AddFoamAtBorders(waterTilemap, foamTilemap, foamRuleTile);
 
-        // Setup villages
-        List<(Vector3 Position, float Radius)> listOfVillages = SetupVillages();
-        
-        // Place rocks and trees last
-        PlaceAnimatedRocks();
-        GenerateForest(listOfVillages);
-
-        // place decorative elements
-        PlaceDecorations();
-
         // Refresh all tilemaps
         waterTilemap.RefreshAllTiles();
         foamTilemap.RefreshAllTiles();
@@ -179,12 +169,23 @@ public class MapGenerator : MonoBehaviour
         GridManager.Instance.GetComponent<SaveLoadMap>().Save();
         GridManager.Instance.GetComponent<SaveLoadMap>().Load();
 
-        EcosystemScoreManager.Instance.ResetScore(); // To ensure score starts at 0
-        EcosystemScoreManager.Instance.EnableScoring();
+        // Setup villages
+        List<(Vector3 Position, float Radius)> listOfVillages = SetupVillages();
+        
+        // Place rocks and trees last
+        PlaceAnimatedRocks();
+        GenerateForest(listOfVillages);
+
+        // place decorative elements
+        PlaceDecorations();
+
+
+
+
 
     }
 
-    List<List<Vector3Int>> FindIsolatedRegions()
+    private List<List<Vector3Int>> FindIsolatedRegions()
     {
         List<List<Vector3Int>> isolatedRegions = new List<List<Vector3Int>>();
         HashSet<Vector3Int> visited = new HashSet<Vector3Int>();
@@ -205,7 +206,7 @@ public class MapGenerator : MonoBehaviour
         return isolatedRegions;
     }
 
-    List<Vector3Int> BFSGrassRegion(Vector3Int start, HashSet<Vector3Int> visited)
+    private List<Vector3Int> BFSGrassRegion(Vector3Int start, HashSet<Vector3Int> visited)
     {
         List<Vector3Int> region = new List<Vector3Int>();
         Queue<Vector3Int> queue = new Queue<Vector3Int>();
@@ -232,13 +233,12 @@ public class MapGenerator : MonoBehaviour
         return region;
     }
 
-    bool IsInBounds(Vector3Int pos)
+    private bool IsInBounds(Vector3Int pos)
     {
         return pos.x >= 0 && pos.x < mapWidth && pos.y >= 0 && pos.y < mapHeight;
     }
 
-
-    void ConnectClosestRegions(List<List<Vector3Int>> regions)
+    private void ConnectClosestRegions(List<List<Vector3Int>> regions)
     {
         // Conceptual outline: Further details needed for actual obstacle avoidance and pathfinding.
         for (int i = 0; i < regions.Count; i++)
@@ -276,7 +276,7 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-    void ConnectTwoPointsSimple(Vector3Int start, Vector3Int end)
+    private void ConnectTwoPointsSimple(Vector3Int start, Vector3Int end)
     {
         // Bresenham's line algorithm for a straight line between two points
         int x0 = start.x, y0 = start.y;
@@ -319,7 +319,7 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-    void ApplyGrassTile(int x, int y)
+    private void ApplyGrassTile(int x, int y)
     {
         if (x >= 0 && x < mapWidth && y >= 0 && y < mapHeight)
         {
@@ -329,11 +329,7 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-
-
-
-
-    void GenerateTile(int x, int y)
+    private void GenerateTile(int x, int y)
     {
         float perlinValue = Mathf.PerlinNoise((x + offsetX) * noiseScale, (y + offsetY) * noiseScale);
 
@@ -352,9 +348,7 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-
-
-    void AddFoamToShore()
+    private void AddFoamToShore()
     {
         for (int x = 0; x < mapWidth; x++)
         {
@@ -368,7 +362,7 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-    bool IsAdjacentToWater(int x, int y)
+    private bool IsAdjacentToWater(int x, int y)
     {
         Vector3Int[] adjacentDirections = new Vector3Int[]
         {
@@ -389,7 +383,8 @@ public class MapGenerator : MonoBehaviour
 
         return false;
     }
-    void EnforceStoneRule()
+
+    private void EnforceStoneRule()
     {
         for (int x = 0; x < mapWidth; x++)
         {
@@ -421,7 +416,7 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-    void AddGrassUnderStoneBorders()
+    private void AddGrassUnderStoneBorders()
     {
         for (int x = 0; x < mapWidth; x++)
         {
@@ -436,7 +431,7 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-    bool IsStoneNextToGrass(int x, int y)
+    private bool IsStoneNextToGrass(int x, int y)
     {
         TileBase currentTile = stoneTilemap.GetTile(new Vector3Int(x, y, 0));
         Vector3Int[] adjacentDirections = new Vector3Int[]
@@ -477,9 +472,7 @@ public class MapGenerator : MonoBehaviour
         return isNextToGrass;
     }
 
-
-
-    void PlaceAnimatedRocks()
+    private void PlaceAnimatedRocks()
     {
         for (int x = 0; x < mapWidth; x++)
         {
@@ -501,13 +494,13 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-    bool IsWaterTile(int x, int y)
+    private bool IsWaterTile(int x, int y)
     {
         TileBase currentTile = waterTilemap.GetTile(new Vector3Int(x, y, 0));
         return currentTile == waterRuleTile;
     }
 
-    float CalculateProximityToShore(int x, int y)
+    private float CalculateProximityToShore(int x, int y)
     {
         // Calculate proximity to shore
         // This is a simple example where the proximity increases the closer the tile is to a non-water tile
@@ -531,8 +524,7 @@ public class MapGenerator : MonoBehaviour
         return 0.1f; // Base chance away from the shore
     }
 
-
-    void GenerateForest(List<(Vector3 Position, float Radius)> listOfVillages)
+    private void GenerateForest(List<(Vector3 Position, float Radius)> listOfVillages)
     {
         for (int x = 0; x < mapWidth; x++)
         {
@@ -548,9 +540,7 @@ public class MapGenerator : MonoBehaviour
         CleanupTrees(listOfVillages);
     }
 
-
-
-    bool CanPlaceTree(int x, int y)
+    private bool CanPlaceTree(int x, int y)
     {
         TileBase grassTile = grassTilemap.GetTile(new Vector3Int(x, y, 0));
         TileBase stoneTile = stoneTilemap.GetTile(new Vector3Int(x, y, 0));
@@ -560,9 +550,7 @@ public class MapGenerator : MonoBehaviour
         return canPlace;
     }
 
-
-
-    void PlaceTree(int x, int y)
+    private void PlaceTree(int x, int y)
     {
         Vector3 treePosition = new Vector3(x + Random.Range(-0.125f, 0.125f), y + Random.Range(-0.125f, 0.125f), 0);
         GameObject tree = Instantiate(treePrefab, treePosition, Quaternion.identity);
@@ -591,8 +579,7 @@ public class MapGenerator : MonoBehaviour
         tree.transform.SetParent(treesParent.transform);
     }
 
-
-    void CleanupTrees(List<(Vector3 Position, float Radius)> listOfVillages)
+    private void CleanupTrees(List<(Vector3 Position, float Radius)> listOfVillages)
     {
         // Create a list to hold all trees to be removed
         List<GameObject> treesToRemove = new List<GameObject>();
@@ -620,26 +607,7 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-
-    bool IsValidTreePosition(Vector3Int cellPosition)
-    {
-        // Check if the cell position is out of bounds
-        if (cellPosition.x < 0 || cellPosition.x >= mapWidth || cellPosition.y < 0 || cellPosition.y >= mapHeight)
-        {
-            return false;
-        }
-
-        // Check if the cell position has a stone or water tile
-        if (stoneTilemap.HasTile(cellPosition) || waterTilemap.HasTile(cellPosition))
-        {
-            return false;
-        }
-
-        // The position is valid if it's in bounds and not occupied by stone or water
-        return true;
-    }
-
-    void PlaceMushrooms(int x, int y)
+    private void PlaceMushrooms(int x, int y)
     {
         GameObject mushroom;
 
@@ -653,7 +621,7 @@ public class MapGenerator : MonoBehaviour
 
     }
 
-    void PlacePumpkins(int x, int y)
+    private void PlacePumpkins(int x, int y)
     {
         GameObject pumpkin;
 
@@ -666,7 +634,7 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-    void PlaceStones(int x, int y)
+    private void PlaceStones(int x, int y)
     {
         GameObject stone;
 
@@ -679,7 +647,7 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-    void PlaceBones(int x, int y)
+    private void PlaceBones(int x, int y)
     {
         GameObject bones;
 
@@ -690,17 +658,17 @@ public class MapGenerator : MonoBehaviour
             bones.transform.SetParent(decorationsParent.transform);
         }
     }
- 
+
 
     // Utility method to instantiate a random prefab from an array at a given position
-    GameObject InstantiateRandomPrefab(GameObject[] prefabs, int x, int y)
+    private GameObject InstantiateRandomPrefab(GameObject[] prefabs, int x, int y)
     {
         GameObject prefab = prefabs[Random.Range(0, prefabs.Length)];
         return Instantiate(prefab, CalculateWorldPosition(x, y), Quaternion.identity);
     }
 
     // Utility method to check if a tile position can have a decoration placed on it
-    bool CanPlaceDecoration(Tilemap tilemap, int x, int y)
+    private bool CanPlaceDecoration(Tilemap tilemap, int x, int y)
     {
         TileBase grassTile = grassTilemap.GetTile(new Vector3Int(x, y, 0));
         TileBase stoneTile = stoneTilemap.GetTile(new Vector3Int(x, y, 0));
@@ -712,15 +680,11 @@ public class MapGenerator : MonoBehaviour
     }
 
     // Utility method to convert tilemap coordinates to world position
-    Vector3 CalculateWorldPosition(int x, int y)
-    {
-        // Add randomization if needed to avoid grid-like placement
-        return new Vector3(x + Random.Range(-0.5f, 0.5f), y + Random.Range(-0.5f, 0.5f), 0);
-    }
+    private Vector3 CalculateWorldPosition(int x, int y) => new Vector3(x + Random.Range(-0.5f, 0.5f), y + Random.Range(-0.5f, 0.5f), 0);
 
 
     // Place all types of decorations
-    void PlaceDecorations()
+    private void PlaceDecorations()
     {
         for (int x = 0; x < mapWidth; x++)
         {
@@ -738,7 +702,7 @@ public class MapGenerator : MonoBehaviour
     }
 
     // Cleanup function for decorations
-    void CleanupInvalidDecorations()
+    private void CleanupInvalidDecorations()
     {
         // Create a list to hold all decorations to be removed
         List<GameObject> decorationsToRemove = new List<GameObject>();
@@ -761,7 +725,7 @@ public class MapGenerator : MonoBehaviour
     }
 
     // Utility method to check if a tile position can have a decoration placed on it
-    bool IsValidDecorationPosition(Vector3Int cellPosition)
+    private bool IsValidDecorationPosition(Vector3Int cellPosition)
     {
         // Check if the cell position is out of bounds
         if (cellPosition.x < 0 || cellPosition.x >= mapWidth || cellPosition.y < 0 || cellPosition.y >= mapHeight)
@@ -779,7 +743,7 @@ public class MapGenerator : MonoBehaviour
         return true;
     }
 
-    void AddFoamAtBorders(Tilemap waterTilemap, Tilemap foamTilemap, TileBase foamTile)
+    private void AddFoamAtBorders(Tilemap waterTilemap, Tilemap foamTilemap, TileBase foamTile)
     {
         BoundsInt bounds = waterTilemap.cellBounds;
         TileBase borderTile;
@@ -821,7 +785,7 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-    List<Vector3Int> FindSuitableLocations(Tilemap tilemap, int requiredSpace)
+    private List<Vector3Int> FindSuitableLocations(Tilemap tilemap, int requiredSpace)
     {
         List<Vector3Int> suitableLocations = new List<Vector3Int>();
 
@@ -840,7 +804,7 @@ public class MapGenerator : MonoBehaviour
         return suitableLocations;
     }
 
-    bool IsLocationSuitable(Tilemap tilemap, Vector3Int location, int requiredSpace)
+    private bool IsLocationSuitable(Tilemap tilemap, Vector3Int location, int requiredSpace)
     {
         // Check if the central tile itself is grass and not a tree
         if (!IsGrassTile(tilemap, location)) return false;
@@ -886,22 +850,20 @@ public class MapGenerator : MonoBehaviour
 
 
     // Helper method to check if a tile at a given position is a grass tile
-    bool IsGrassTile(Tilemap tilemap, Vector3Int position)
+    private bool IsGrassTile(Tilemap tilemap, Vector3Int position)
     {
         TileBase tile = tilemap.GetTile(position);
         return tile != null && tile == grassRuleTile; // Assuming 'grassRuleTile' is the reference to your grass tile
     }
 
     // Helper method to check if a tile at a given position is a tree tile
-    bool IsStoneTile(Tilemap tilemap, Vector3Int position)
+    private bool IsStoneTile(Tilemap tilemap, Vector3Int position)
     {
         TileBase tile = tilemap.GetTile(position);
         return tile != null && tile == stoneRuleTile; // Assuming 'treeRuleTile' is the reference to your tree tile
     }
 
-
-
-    (Vector3Int playerVillage, Vector3Int enemyVillage) ChooseVillageLocations(List<Vector3Int> locations)
+    private (Vector3Int playerVillage, Vector3Int enemyVillage) ChooseVillageLocations(List<Vector3Int> locations)
     {
         Vector3Int playerVillage = new Vector3Int(-1, -1, -1);
         Vector3Int enemyVillage = new Vector3Int(-1, -1, -1);
@@ -924,18 +886,28 @@ public class MapGenerator : MonoBehaviour
         return (playerVillage, enemyVillage);
     }
 
-
-    void SpawnVillage(Vector3Int location, GameObject villagePrefab)
+    private void SpawnVillage(Vector3Int location, GameObject villagePrefab, GameObject[] villageTroops)
     {
         // Convert tilemap location to world space, adjust as necessary for your project
         Vector3 worldPosition = grassTilemap.CellToWorld(location) + new Vector3(0.5f, 0.5f, 0); // Centering the prefab
         Instantiate(villagePrefab, worldPosition, Quaternion.identity);
+
+        //set mainCamera position to the village
+        MainCamera.transform.position = new Vector3(worldPosition.x, worldPosition.y, MainCamera.transform.position.z);
+
+        // Spawn troops around the village
+        for (int i = 0; i < villageTroops.Length; i++)
+        {
+            Vector3 spawnOffset = new Vector3(Mathf.Cos(i * 2 * Mathf.PI / villageTroops.Length), Mathf.Sin(i * 2 * Mathf.PI / villageTroops.Length), 0);
+            Instantiate(villageTroops[i], worldPosition + spawnOffset*2, Quaternion.identity);
+        }
+
     }
 
     // Example usage
     List<(Vector3 Position, float Radius)> SetupVillages()
     {
-        int requiredSpace = 20;
+        int requiredSpace = 15;
         var suitableLocations = FindSuitableLocations(grassTilemap, requiredSpace); // Example requiredSpace
         var (playerVillagePos, enemyVillagePos) = ChooseVillageLocations(suitableLocations); // Example minDistance
 
@@ -944,11 +916,8 @@ public class MapGenerator : MonoBehaviour
 
         if (playerVillagePos != new Vector3Int (-1,-1,-1) && enemyVillagePos != new Vector3Int(-1, -1, -1))
         {
-            GameObject playerVillagePrefab = PlayerVillage; // Assign your prefab
-            GameObject enemyVillagePrefab = EnemyVillage; // Assign your prefab
-
-            SpawnVillage(playerVillagePos, playerVillagePrefab);
-            SpawnVillage(enemyVillagePos, enemyVillagePrefab);
+            SpawnVillage(enemyVillagePos, EnemyVillage, EnemyTroops);
+            SpawnVillage(playerVillagePos, PlayerVillage, PlayerTroops);
         }
         else
         {
@@ -964,7 +933,7 @@ public class MapGenerator : MonoBehaviour
         return listOfVillages;
     }
 
-    float CalculateVillageRadius(int requiredSpace, float buffer = 0)
+    private float CalculateVillageRadius(int requiredSpace, float buffer = 0)
     {
         // Calculate the basic radius from required space
         float radius = Mathf.Sqrt(requiredSpace / Mathf.PI);

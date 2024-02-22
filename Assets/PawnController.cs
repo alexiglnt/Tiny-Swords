@@ -56,17 +56,17 @@ public class PawnController : MonoBehaviour
         }
         else if (selectedPawn != null)
         {
-            // Check if a tree is clicked
-            if (hit.collider != null && hit.collider.GetComponent<TreeController>() != null)
+            // Check if a tree is clicked and distance less than 1.5
+            if (hit.collider != null && hit.collider.GetComponent<TreeController>() != null && Vector2.Distance(hit.collider.transform.position, transform.position) < 1.5f)
             {
                 selectedPawn.StartAction(hit.collider.GetComponent<TreeController>());
             }
             // Check if a sheep is clicked
-            else if (hit.collider != null && hit.collider.GetComponent<SheepController>() != null)
+            else if (hit.collider != null && hit.collider.GetComponent<SheepController>() != null && Vector2.Distance(hit.collider.transform.position, transform.position) < 1.5f)
             {
                 selectedPawn.StartAction(hit.collider.GetComponent<SheepController>());
             }
-            if (hit.collider != null && hit.collider.GetComponent<MineController>() != null)
+            if (hit.collider != null && hit.collider.GetComponent<MineController>() != null && Vector2.Distance(hit.collider.transform.position, transform.position) < 1.5f)
             {
                 selectedPawn.StartAction(hit.collider.GetComponent<MineController>());
             }
