@@ -168,8 +168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   card: {fileID: 11400000, guid: 67c385e18680f2a4ab60499278112ea8, type: 2}
-  cardDisplay: {fileID: 0}
-  BuildingCardCanvas: {fileID: 0}
+  BuildingCardCanvas: {fileID: 450783538383403905, guid: 2d63ea293f2a45440a1dd29ae3fab745, type: 3}
 --- !u!114 &7574505893463184704
 MonoBehaviour:
   m_ObjectHideFlags: 0

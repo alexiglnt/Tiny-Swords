@@ -13,6 +13,9 @@ GameObject:
   - component: {fileID: 5071727872196998661}
   - component: {fileID: 291893472558496026}
   - component: {fileID: 6422514347477897994}
+  - component: {fileID: 8174147299086382271}
+  - component: {fileID: 7032218520080189006}
+  - component: {fileID: 4585940553022963941}
   m_Layer: 0
   m_Name: archer_red
   m_TagString: Untagged
@@ -121,8 +124,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   card: {fileID: 11400000, guid: c91f8d57ec3d8ff43b5539dbab0ee74f, type: 2}
-  cardDisplay: {fileID: 621701224107558435, guid: 6f04e73a38442b44e9ca99f308fb572b, type: 3}
-  CardCanvas: {fileID: 4834370636999566786, guid: 6f04e73a38442b44e9ca99f308fb572b, type: 3}
 --- !u!61 &6422514347477897994
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -168,3 +169,42 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.63, y: 0.75}
   m_EdgeRadius: 0
+--- !u!114 &8174147299086382271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6284853936270835706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f365206d32e2bf45af7536c3dd48139, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _occupiedAreaData: {fileID: 0}
+--- !u!114 &7032218520080189006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6284853936270835706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8aaa838d1f311734a844b133eeca8e91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mapHeight: 50
+--- !u!114 &4585940553022963941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6284853936270835706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 254a30509222a4046b2dcfce24a7cee0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stats: {fileID: 11400000, guid: 062260bf588bc5145bb8ac786ac4a89c, type: 2}

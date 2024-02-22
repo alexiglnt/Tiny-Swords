@@ -350,11 +350,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4834370636999566786, guid: 6f04e73a38442b44e9ca99f308fb572b, type: 3}
       propertyPath: m_Name
-      value: BuildingUI 1
+      value: CastleRedUI
       objectReference: {fileID: 0}
     - target: {fileID: 4834370636999566786, guid: 6f04e73a38442b44e9ca99f308fb572b, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5008395704873095919, guid: 6f04e73a38442b44e9ca99f308fb572b, type: 3}
       propertyPath: m_text

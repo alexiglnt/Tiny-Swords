@@ -76,8 +76,12 @@ public class MapGenerator : MonoBehaviour
 
     public float baseRockSpawnChance = 0.1f;
 
+    public GameObject MainCamera;
+
     public GameObject EnemyVillage;
     public GameObject PlayerVillage;
+    public GameObject[] EnemyTroops;
+    public GameObject[] PlayerTroops;
 
     private void Start()
     {
@@ -882,11 +886,22 @@ public class MapGenerator : MonoBehaviour
         return (playerVillage, enemyVillage);
     }
 
-    private void SpawnVillage(Vector3Int location, GameObject villagePrefab)
+    private void SpawnVillage(Vector3Int location, GameObject villagePrefab, GameObject[] villageTroops)
     {
         // Convert tilemap location to world space, adjust as necessary for your project
         Vector3 worldPosition = grassTilemap.CellToWorld(location) + new Vector3(0.5f, 0.5f, 0); // Centering the prefab
         Instantiate(villagePrefab, worldPosition, Quaternion.identity);
+
+        //set mainCamera position to the village
+        MainCamera.transform.position = new Vector3(worldPosition.x, worldPosition.y, MainCamera.transform.position.z);
+
+        // Spawn troops around the village
+        for (int i = 0; i < villageTroops.Length; i++)
+        {
+            Vector3 spawnOffset = new Vector3(Mathf.Cos(i * 2 * Mathf.PI / villageTroops.Length), Mathf.Sin(i * 2 * Mathf.PI / villageTroops.Length), 0);
+            Instantiate(villageTroops[i], worldPosition + spawnOffset*2, Quaternion.identity);
+        }
+
     }
 
     // Example usage
@@ -901,11 +916,8 @@ public class MapGenerator : MonoBehaviour
 
         if (playerVillagePos != new Vector3Int (-1,-1,-1) && enemyVillagePos != new Vector3Int(-1, -1, -1))
         {
-            GameObject playerVillagePrefab = PlayerVillage; // Assign your prefab
-            GameObject enemyVillagePrefab = EnemyVillage; // Assign your prefab
-
-            SpawnVillage(playerVillagePos, playerVillagePrefab);
-            SpawnVillage(enemyVillagePos, enemyVillagePrefab);
+            SpawnVillage(enemyVillagePos, EnemyVillage, EnemyTroops);
+            SpawnVillage(playerVillagePos, PlayerVillage, PlayerTroops);
         }
         else
         {

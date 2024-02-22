@@ -6,9 +6,25 @@ using UnityEngine.EventSystems;
 public class OnClickCharacter : MonoBehaviour
 {
     public Card card;
-    public CardDisplay cardDisplay; // Référence au script CardDisplay
-    public GameObject CardCanvas; // Référence au canvas de la carte
-    public GameObject CardDisplayUI; // Référence à l'UI de la carte
+    private CardDisplay cardDisplay; // Référence au script CardDisplay
+    private GameObject CardCanvas; // Référence au canvas de la carte
+
+    void Start()
+    {
+        CardCanvas = GameObject.Find("CardUI");
+        cardDisplay = CardCanvas.GetComponent<CardDisplay>();
+    }
+
+    void Update()
+    {
+        // Vérifier si le clic droit de la souris est enfoncé
+        if (Input.GetMouseButtonDown(1))
+        {
+            Debug.Log("Click right ");
+            // Afficher ou activer les informations de la carte
+            DisplayInformation();
+        }
+    }
 
     // Appelé lorsque le clic est détecté
     public void OnMouseDown()
@@ -24,27 +40,10 @@ public class OnClickCharacter : MonoBehaviour
         //btnShowCard.SetActive(true);
     }
 
-    void Update()
-    {
-        // Vérifier si le clic droit de la souris est enfoncé
-        if (Input.GetMouseButtonDown(1))
-        {
-            Debug.Log("Click right ");
-            // Afficher ou activer les informations de la carte
-            DisplayInformation();
-        }
-    }
-
     public void DisplayInformation()
     {
         // Passer l'objet Card au script CardDisplay
         cardDisplay.DisplayCardInformation(card);
-    }
-
-    void Start()
-    {
-        // Désactiver le canvas de la carte
-        CardCanvas.SetActive(false);
     }
 
     void SwitchCanvasVisibility()
