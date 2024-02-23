@@ -14,7 +14,7 @@ public enum ColorBlindMode
     Achromatomaly = 8,
 }
 
-[ExecuteInEditMode]
+
 public class ColorBlindFilter : MonoBehaviour
 {
     public ColorBlindMode mode = ColorBlindMode.Normal;
